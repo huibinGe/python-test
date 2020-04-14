@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="{{url_for('static', filename='jquery.min.js')}}"></script>
+    <script>
+    function editcommodity(id)
+     {
+        $.ajax({
+        url:'/commoditylist/query/' + id,
+        dataType: 'html',
+        data:id,
+        success: function(response){
+            alert(response)
+
+            var result = $('#box-config').append(response).find('head').html();
+            alert(result)
+            $('#box-config').html(result);
+            $('#box-config').modal('show');
+
+        }
+        })
+     }
+     function deletecommodity(id)
+     {
+        $.ajax({
+        url:'/commoditylist/delete/' + id,
+        dataType: 'html',
+        data:id,
+        success:function()
+        {
+            alert("删除成功")
+            location.reload(true);
+        }
+        })
+     }
+    </script>
+
+</head>
+<body>
+    <meta charset="UTF-8">
+    <title>商品</title>
+    <table>
+    <tr>
+        <td>编号</td>
+        <td>商品名</td>
+        <td>价格</td>
+    </tr>
+        {% for commo in commodity %}
+    <tr>
+        <form action="{{ url_for('bussiness_page.edit') }}" method="post">
+            <td><input type="text" name="id" value="{{ commo.id }}" class="form-control" readonly="readonly" ></td>
+            <td><input type="text" name="name" value="{{ commo.name }}" class="form-control" placeholder="Text input"></td>
+            <td><input type="text" name="price" value="{{ commo.price }}" class="form-control" placeholder="Text input"></td>
+            <td>&nbsp;</td><td><input type="submit" name="submit" value="修改" /></td>
+        </form>
+            <td>
+            <button onclick="deletecommodity({{commo.id}})">下架</button>
+        </td>
+
+    </tr>
+        {% endfor %}
+         <tr>
+        <td>商品名</td>
+        <td>价格</td>
+         </tr>
+        <tr>
+        <form action="{{ url_for('bussiness_page.add') }}" method="post">
+            <td><input type="text" name="name"  class="form-control"></td>
+            <td><input type="text" name="price"  class="form-control" ></td>
+            <td>&nbsp;</td><td><input type="submit" name="submit" value="新增" /></td>
+        </form>
+        </tr>
+    </table>
+    <form action="{{ url_for('bussiness_page.query') }}" method="post">
+    <p>名称: <input type="text" id="test" value=></p>
+    <td><input type="submit" name="submit" value="查询" /></td>
+    </form>
+
+</body>
+</html>
