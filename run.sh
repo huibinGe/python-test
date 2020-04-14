@@ -1,1 +1,2 @@
-export FLASK_APP=app.py
+export FLASK_APP=__init__.py
+
