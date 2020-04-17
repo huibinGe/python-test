@@ -56,8 +56,10 @@
         </tr>
     </table>
     <tr>
-        <td>名称: <input id='q_id' type="text" id="q_id" value=></td>
-        <button onclick="querycommodity()">查询</button>
+        <form action="{{ url_for('bussiness_page.query') }}" method="post">
+            <td>名称: <input name="name" type="text" value=></td>
+            <td><input type="submit" name="submit" value="查询" /></td>
+        </form>
     </tr>
 
 </body>
