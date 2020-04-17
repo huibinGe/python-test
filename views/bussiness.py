@@ -34,7 +34,7 @@ def edit():
         db.session.add(co)
         db.session.commit()
         commodity = Commodity.query.all()
-        return render_template('bussiness/commoditylist.html', commodity=commodity)
+        return render_template('bussiness/editcommo_success.html')
 @buss_page.route('/commoditylist/add', methods=['GET', 'PoSt'])
 def add():
         name = request.form.get('name')
