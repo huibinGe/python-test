@@ -3,23 +3,7 @@
 <head>
     <script src="{{url_for('static', filename='jquery.min.js')}}"></script>
     <script>
-    function editcommodity(id)
-     {
-        $.ajax({
-        url:'/commoditylist/query/' + id,
-        dataType: 'html',
-        data:id,
-        success: function(response){
-            alert(response)
 
-            var result = $('#box-config').append(response).find('head').html();
-            alert(result)
-            $('#box-config').html(result);
-            $('#box-config').modal('show');
-
-        }
-        })
-     }
      function deletecommodity(id)
      {
         $.ajax({
@@ -71,10 +55,10 @@
         </form>
         </tr>
     </table>
-    <form action="{{ url_for('bussiness_page.query') }}" method="post">
-    <p>名称: <input type="text" id="test" value=></p>
-    <td><input type="submit" name="submit" value="查询" /></td>
-    </form>
+    <tr>
+        <td>名称: <input id='q_id' type="text" id="q_id" value=></td>
+        <button onclick="querycommodity()">查询</button>
+    </tr>
 
 </body>
 </html>
