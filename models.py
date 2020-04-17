@@ -28,31 +28,26 @@ class Commodity(db.Model):
     def __repr__(self):
         return '<Commodity %r>' % self.name
 
-class Logistics(db.Model):
-    __tablename__ = 'Logistics'
+class Orders(db.Model):
+    __tablename__ = 'Orders'
     #物流
     id = db.Column(db.Integer, primary_key=True)
-    order_id = db.Column(db.Integer, db.ForeignKey('order.id')) ##使用order的id
-    froms = db.Column(db.String(80), unique=False, nullable=False) #始发地
-    tos = db.Column(db.String(80), unique=False, nullable=False) #目的地
-    tel = db.Column(db.String(80), nullable=False)
-    eve_time = db.Column(db.DateTime, nullable=True)
-    def __init__(self, order_id, froms, tos, tel, eve_time):
-        self.order_id = order_id
-        self.froms = froms
-        self.tos = tos
-        self.tel = tel
-        self.eve_time = eve_time
+    o_name = db.Column(db.String(80), unique=True, nullable=True, default='')
+    o_time = db.Column(db.DateTime, nullable=True)
+    location = db.Column(db.String(80), unique=False, nullable=True, default='')
+    person = db.Column(db.String(20), unique=False, nullable=True)
+    tel = db.Column(db.String(80), unique=False, nullable=True)
+    desc = db.Column(db.String(200), unique=False, nullable=True)
+    status = db.Column(db.String(5), unique=False, nullable=True)
 
-class Order(db.Model):
-    #订单
-    __tablename__ = 'order'
-    id = db.Column(db.Integer, primary_key=True)
-    b_name =  db.Column(db.String(80), unique=False, nullable=False)#客户名字
-    c_name = db.Column(db.String(80), unique=False, nullable=False)#商品名
-    def __init__(self, b_name, c_name):
-        self.b_name = b_name
-        self.c_name = c_name
+    def __init__(self, o_name, o_time, location, person, tel, desc, status):
+        self.o_name = o_name
+        self.o_time = o_time
+        self.location = location
+        self.person = person
+        self.tel = tel
+        self.desc = desc
+        self.status = status
 
 
 def create_data():
