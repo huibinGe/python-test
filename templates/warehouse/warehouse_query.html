@@ -10,19 +10,17 @@
         <td>商品名</td>
         <td>入仓时间</td>
         <td>仓库位置</td>
-        <td>价格</td>
         <td>状态</td>
     </tr>
     <tr>
-        <td>{{ warehouse.name }}</td>
-        <td>{{ warehouse.i_time }}</td>
-        <td>{{ warehouse.location }}</td>
-        <td>{{ warehouse.price }}</td>
-        <td>{{ warehouse.status }}</td>
+        <td>{{ orders.o_name }}</td>
+        <td>{{ orders.o_time }}</td>
+        <td>{{ orders.location }}</td>
+        <td>{{ orders.status }}</td>
     </tr>
 </table>
 <ur class="sub">
-    <li><a class="" href="/warehouse">
+    <li><a class="" href="/warehouselist">
         <span class="sub-menu-text">返回</span>></a>
     </li>
 </ur>

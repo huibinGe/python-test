@@ -29,6 +29,8 @@ def login():
                 return render_template('bussiness/index.html')
             elif user.types == "商家":
                 return render_template('customer/index.html')
+            elif user.types == "仓库":
+                return render_template('warehouse/index.html')
             else:
                 session['user_id'] = user.id
                 return redirect(url_for('user_page.users'))

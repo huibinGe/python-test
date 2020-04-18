@@ -75,6 +75,7 @@ def create_data():
     db.session.add(user1)
     db.session.add(user2)
     db.session.add(user3)
+    db.session.add(user4)
     db.session.add(c1)
     db.session.add(c2)
     db.session.add(c3)
