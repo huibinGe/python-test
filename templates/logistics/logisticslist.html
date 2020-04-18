@@ -29,7 +29,7 @@
         <td>订单名</td>
         <td>时间</td>
         <td>起始地</td>
-        <td>订货客户</td>
+        <td>客户</td>
         <td>电话</td>
         <td>目的地</td>
         <td>状态</td>
@@ -39,24 +39,21 @@
         {# 入仓的货物，点击发货，状态从入仓变成已发货#}
         {% for order in orders %}
     <tr>
-        <form action="{{ url_for('logistics_page.ship') }}" method="post">
-            <td><input type="text" name="id" value="{{ order.id }}" class="form-control" readonly="readonly" ></td>
-            <td><input type="text" name="o_name" value="{{ order.o_name }}" class="form-control" readonly="readonly"> </td>
-            <td><input type="text" name="o_time" value="{{ order.o_time }}" class="form-control" readonly="readonly"> </td>
-            <td><input type="text" name="location" value="{{ order.location }}" class="form-control" readonly="readonly"> </td>
-            <td><input type="text" name="person" value="{{ order.person }}" class="form-control" readonly="readonly"> </td>
-            <td><input type="text" name="tel" value="{{ order.tel }}" class="form-control" readonly="readonly"></td>
-            <td><input type="text" name="desc" value="{{ order.desc }}" class="form-control" readonly="readonly"></td>
-            <td><input type="text" name="status" value="{{ order.status }}" class="form-control" readonly="readonly"> </td>
-            <td>&nbsp;</td><td><input type="submit" name="submit" value="发货" /></td>
-        </form>
-            <td>
-            <button onclick="deleteorders({{ order.id }})">删除</button>
+            <td>{{ order.id }}</td>
+            <td>{{ order.o_name }}</td>
+            <td>{{ order.o_time }}</td>
+            <td>{{ order.location }}</td>
+            <td>{{ order.person }}</td>
+            <td>{{ order.tel }}</td>
+            <td>{{ order.desc }}</td>
+            <td>{{ order.status }}</td>
+            <td><a href="{{url_for('logistics_page.outc', id=order.id)}}">发货</a></td>
+         <!--   <button onclick="deleteorders({{ order.id }})">删除</button> -->
         </td>
     </tr>
         {% endfor %}
     </table>
-
+<!--
     <br>
     <table>
     <tr>
@@ -82,11 +79,12 @@
         </form>
     </tr>
     </table>
+-->
 
     <br>
     <tr>
         <form action="{{ url_for('logistics_page.query') }}" method="post">
-            <td>名称: <input name="o_name" type="text" value=></td>
+            <td>订单号: <input name="o_id" type="text" value=></td>
             <td><input type="submit" name="submit" value="查询" /></td>
         </form>
     </tr>
