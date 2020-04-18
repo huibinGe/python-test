@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>登陆界面</h1>
+     {% for message in get_flashed_messages() %}
+         <div class="alert">{{ message }}</div>
+     {% endfor %}
+    <form action="{{ url_for('bussiness_page.outc', id=order.id) }}" method="post">
+        <table>
+            <tr><td>订单号：</td><td><input type="text" name="id" value="{{order.id}}" readonly="readonly"/></td></tr>
+            <tr><td>商品名：</td><td><input type="text" name="o_name" value="{{order.o_name}}" readonly="readonly"/></td>
+            <tr><td>生产时间：</td><td><input type="text" name="o_time" value="{{order.o_time}}"readonly="readonly"/></td>
+            <tr><td>状态：</td><td><input type="text" name="status" value="{{order.status}}" readonly="readonly"/></td>
+            <tr><td>仓库地址：</td><td><input type="text" name="desc" /></td>
+            <tr><td>仓库联系人：</td><td><input type="text" name="person" /></td>
+            <tr><td>仓库电话：</td><td><input type="text" name="tel" /></td>
+            <tr><td>&nbsp;</td><td><input type="submit" name="submit" value="出厂" /></td></tr>
+        </table>
+    </form>
+</body>
+</html>

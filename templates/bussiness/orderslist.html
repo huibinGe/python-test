@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+    <meta charset="UTF-8">
+    <title>订单</title>
+    <table>
+    <tr>
+        <td>编号</td>
+        <td>订单名</td>
+        <td>时间</td>
+        <td>产地</td>
+        <td>联系人</td>
+        <td>电话</td>
+        <td>状态</td>
+    </tr>
+        {% for order in orders %}
+    <tr>
+            <td>{{ order.id }}</td>
+            <td>{{ order.o_name }}</td>
+            <td>{{ order.o_time }}</td>
+            <td>{{ order.location }} </td>
+            <td>{{ order.person }} </td>
+            <td>{{ order.tel }}</td>
+            <td>{{ order.status }}</td>
+            <td><a href="{{url_for('bussiness_page.outc', id=order.id)}}">出厂</a></td>
+
+    </tr>
+        {% endfor %} 
+
+    </table>
+    <tr>
+        <form action="{{ url_for('bussiness_page.query') }}" method="post">
+            <td>订单号: <input name="o_id" type="text" value=></td>
+            <td><input type="submit" name="submit" value="查询" /></td>
+        </form>
+    </tr>
+
+</body>
+</html>

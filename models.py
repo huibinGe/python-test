@@ -32,13 +32,13 @@ class Orders(db.Model):
     __tablename__ = 'Orders'
     #物流
     id = db.Column(db.Integer, primary_key=True)
-    o_name = db.Column(db.String(80), unique=False, nullable=True, default='')
+    o_name = db.Column(db.String(80), unique=False, nullable=True, default='')#商品名
     o_time = db.Column(db.DateTime, nullable=True)
-    location = db.Column(db.String(80), unique=False, nullable=True, default='')
-    person = db.Column(db.String(20), unique=False, nullable=True)
+    location = db.Column(db.String(80), unique=False, nullable=True, default='')#初始地
+    person = db.Column(db.String(20), unique=False, nullable=True, default='')
     tel = db.Column(db.String(80), unique=False, nullable=True)
-    desc = db.Column(db.String(200), unique=False, nullable=True)
-    comp = db.Column(db.String(100), unique=False, nullable=True)
+    desc = db.Column(db.String(200), unique=False, nullable=True)#目的地
+    comp = db.Column(db.String(100), unique=False, nullable=True, default='')
     status = db.Column(db.String(5), unique=False, nullable=True)
 
     def __init__(self, o_name, o_time, location, person, tel, desc,comp, status):
@@ -58,6 +58,7 @@ def create_data():
     user1 = User("张三", "111@qq.com", "111111", "厂商")
     user2 = User("李四", "222@qq.com", "222222", "商家")
     user3 = User("王五", "333@qq.com", "333333", "物流公司")
+    user4 = User("霍六", "444@qq.com", "444444", "仓库")
     c1 = Commodity("王老吉", 5)
     c2 = Commodity("可口可乐", 3)
     c3 = Commodity("旺旺雪饼", 4)
@@ -65,8 +66,10 @@ def create_data():
     o2 = Orders("可口可乐",'2019-04-05 06:33:35.33',"上海","李四","13843558644","贵阳","顺丰","已发货")
     o3 = Orders("旺旺雪饼",'2019-03-05 01:53:55.63',"福州","李四","13843558644","西安","申通","已出库")
     o4 = Orders("旺旺雪饼",'2019-04-05 01:53:55.63',"福州","李四","13843558644","西安","顺丰","已签收")
-    o5 = Orders("旺旺雪饼",'2019-04-05 01:53:55.63',"福州","李四","13843558644","西安","ems","已出厂")
+    o5 = Orders("旺旺雪饼",'2019-04-06 01:53:55.63',"福州","霍六","1384355865","福州","","已出厂")
     o6 = Orders("旺旺雪饼",'2019-04-05 01:53:55.63',"福州","李四","13843558644","西安","顺丰","已发货")
+    o7 = Orders("旺旺雪饼",'2019-04-05 01:53:55.63',"福州","张三","13843558645","","顺丰","已生产")
+
 
 
     db.session.add(user1)
@@ -81,6 +84,7 @@ def create_data():
     db.session.add(o4)
     db.session.add(o5)
     db.session.add(o6)
+    db.session.add(o7)
     db.session.commit()
 
 

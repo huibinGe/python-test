@@ -1,55 +1,45 @@
 from flask import Blueprint, render_template, session, redirect, request, url_for, flash
-from ..models import Commodity
+from sqlalchemy import or_
+from ..models import Commodity, Orders
 from ..extension import db
+import time
 buss_page = Blueprint('bussiness_page', __name__)
 
+@buss_page.route('/corderslist')
+def list_all_orders():
+    orders = Orders.query.filter(or_(Orders.status=="已出厂", Orders.status=="已生产")).all()
+    return render_template("bussiness/orderslist.html", orders=orders)
 
-@buss_page.route('/commoditylist')
-def list_all_commodities():
-    commodity = Commodity.query.all()
-    return render_template("bussiness/commoditylist.html", commodity=commodity)
-
-
-@buss_page.route('/commoditylist/delete/<int:id>')
-def delete_commodities(id):
-    result = Commodity.query.filter(Commodity.id==id).first()
-    db.session.delete(result)
-    db.session.commit()
-    commodity = Commodity.query.all()
-    return render_template("bussiness/commoditylist.html", commodity=commodity)
-
-
-
-@buss_page.route('/commoditylist/edit', methods=['GET', 'PoSt'])
-def edit():
-        id = request.form.get('id')
-        name = request.form.get('name')
-        price = request.form.get('price')
-        co = Commodity.query.filter(Commodity.id == int(id)).first()
-        co.name = name
-        co.price = price
-        db.session.add(co)
-        db.session.commit()
-        commodity = Commodity.query.all()
-        return render_template('bussiness/editcommo_success.html')
-@buss_page.route('/commoditylist/add', methods=['GET', 'POST'])
-def add():
-        name = request.form.get('name')
-        price = request.form.get('price')
-        co = Commodity("name", price)
-        db.session.add(co)
-        db.session.commit()
-        commodity = Commodity.query.all()
-        return render_template('bussiness/commoditylist.html', commodity=commodity)
-
-@buss_page.route('/commoditylist/query',methods=['GET', 'POST'])
+@buss_page.route('/corderslist/query', methods=[ 'POST'])
 def query():
-    name = request.form.get('name')
-    commodity = Commodity.query.filter(Commodity.name==name).first()
-    print(111111)
-    return render_template('bussiness/commodity_query.html', commodity=commodity)
+    id = request.form.get('o_id')
+    order = Orders.query.get(id)
+    return render_template("bussiness/orders_query.html", order=order)
 
-
+@buss_page.route('/outc/<id>', methods=['GET', 'POSt'])
+def outc(id):
+    order = Orders.query.get(id)
+    if request.method == 'GET':
+        if order.status=="已出厂":
+            message = "商品已经出厂，无法出厂"
+            return render_template('bussiness/error_page.html', message=message)
+        else:
+            return render_template('bussiness/outc.html', order=order)
+    else:
+        id = request.form.get("id")
+        desc =request.form.get("desc")
+        tel = request.form.get("tel")
+        person = request.form.get("person")
+        order = Orders.query.get(id)
+        order.desc = desc
+        order.tel =tel
+        order.person = person
+        order.status = "已出厂"
+        order.o_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+        db.session.add(order)
+        db.session.commit()
+        orders = Orders.query.filter(or_(Orders.status == "已出厂", Orders.status == "已生产")).all()
+        return render_template("bussiness/error_page.html", message="出仓成功")
 
 
 
