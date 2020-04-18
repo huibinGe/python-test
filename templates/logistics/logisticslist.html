@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="{{url_for('static', filename='jquery.min.js')}}"></script>
+    <script>
+
+     function deleteorders(id)
+     {
+        $.ajax({
+        url:'/logisticslist/delete/' + id,
+        dataType: 'html',
+        data:id,
+        success:function()
+        {
+            alert("删除成功")
+            location.reload(true);
+        }
+        })
+     }
+    </script>
+
+</head>
+<body>
+    <meta charset="UTF-8">
+    <title>订单</title>
+    <table>
+    <tr>
+        <td>编号</td>
+        <td>订单名</td>
+        <td>时间</td>
+        <td>起始仓库</td>
+        <td>订货客户</td>
+        <td>电话</td>
+        <td>目的地</td>
+        <td>状态</td>
+    </tr>
+        {# 我这里应当只能显示已入仓、已发货状态物流 #}
+        {# 没有物流单独的表，用订单的表 #}
+        {# 入仓的货物，点击发货，状态从入仓变成已发货#}
+        {% for order in orders %}
+    <tr>
+        <form action="{{ url_for('logistics_page.ship') }}" method="post">
+            <td><input type="text" name="id" value="{{ order.id }}" class="form-control" readonly="readonly" ></td>
+            <td><input type="text" name="o_name" value="{{ order.o_name }}" class="form-control" readonly="readonly"> </td>
+            <td><input type="text" name="o_time" value="{{ order.o_time }}" class="form-control" readonly="readonly"> </td>
+            <td><input type="text" name="location" value="{{ order.location }}" class="form-control" readonly="readonly"> </td>
+            <td><input type="text" name="person" value="{{ order.person }}" class="form-control" readonly="readonly"> </td>
+            <td><input type="text" name="tel" value="{{ order.tel }}" class="form-control" readonly="readonly"></td>
+            <td><input type="text" name="desc" value="{{ order.desc }}" class="form-control" readonly="readonly"></td>
+            <td><input type="text" name="status" value="{{ order.status }}" class="form-control" readonly="readonly"> </td>
+            <td>&nbsp;</td><td><input type="submit" name="submit" value="发货" /></td>
+        </form>
+            <td>
+            <button onclick="deleteorders({{order.id}})">删除</button>
+        </td>
+
+    </tr>
+        {% endfor %}
+
+    </table>
+    <tr>
+        <form action="{{ url_for('logistics_page.query') }}" method="post">
+            <td>名称: <input name="o_name" type="text" value=></td>
+            <td><input type="submit" name="submit" value="查询" /></td>
+        </form>
+    </tr>
+
+</body>
+</html>
