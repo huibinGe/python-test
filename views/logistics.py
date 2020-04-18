@@ -44,21 +44,23 @@ def ship():
     return render_template('logistics/ship_success.html')
 
 
-# @logics_page.route('/orderslist/add', methods=['GET', 'POST'])
-# def add():
-#     id = request.form.get('id')
-#     o_name = request.form.get('o_name')
-#     o_time = request.form.get('o_time')
-#     location = request.form.get('location')
-#     person = request.form.get('person')
-#     tel = request.form.get('tel')
-#     desc = request.form.get('desc')
-#     status = request.form.get('status')
-#     ord = Orders("o_name", person, tel, desc)
-#     db.session.add(ord)
-#     db.session.commit()
-#     orders = Orders.query.all()
-#     return render_template('customer/orderslist.html', orders=orders)
+@logics_page.route('/logistics/add', methods=['GET', 'POST'])
+def add():
+    # id = request.form.get('id')
+    o_name = request.form.get('o_name')
+    o_time = request.form.get('o_time')
+    location = request.form.get('location')
+    person = request.form.get('person')
+    tel = request.form.get('tel')
+    desc = request.form.get('desc')
+    comp = request.form.get('comp')
+    status = request.form.get('status')
+    ord = Orders(o_name, o_time, location, person, tel, desc, comp, status)
+    db.session.add(ord)
+    db.session.commit()
+    # orders = Orders.query.all()
+    orders = Orders.query.filter(or_(Orders.status == "已入仓", Orders.status == "已发货")).all()
+    return render_template('logistics/logisticslist.html', orders=orders)
 
 
 @logics_page.route('/logistics/query', methods=['GET', 'POST'])
