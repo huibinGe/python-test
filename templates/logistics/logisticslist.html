@@ -7,7 +7,7 @@
      function deleteorders(id)
      {
         $.ajax({
-        url:'/logisticslist/delete/' + id,
+        url:'/logistics/delete/' + id,
         dataType: 'html',
         data:id,
         success:function()
@@ -51,7 +51,7 @@
             <td>&nbsp;</td><td><input type="submit" name="submit" value="发货" /></td>
         </form>
             <td>
-            <button onclick="deleteorders({{order.id}})">删除</button>
+            <button onclick="deleteorders({{ order.id }})">删除</button>
         </td>
 
     </tr>
