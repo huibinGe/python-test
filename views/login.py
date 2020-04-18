@@ -25,9 +25,9 @@ def login():
         user = User.query.filter(User.username == name).first()
 
         if user and user.password == pwd:
-            if user.types == "商家":
+            if user.types == "厂商":
                 return render_template('bussiness/index.html')
-            elif user.types == "用户":
+            elif user.types == "商家":
                 return render_template('customer/index.html')
             else:
                 session['user_id'] = user.id

@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, session, redirect, request, url_for, flash
+from sqlalchemy import or_
 from ..models import Orders
 from ..extension import db
 cus_page = Blueprint('customer_page', __name__)
@@ -6,16 +7,15 @@ cus_page = Blueprint('customer_page', __name__)
 
 @cus_page.route('/orderslist')
 def list_all_orders():
-    orders = Orders.query.all()
+    orders = Orders.query.filter(or_(Orders.status=="已发货", Orders.status=="已签收")).all()
     return render_template("customer/orderslist.html", orders=orders)
-
 
 @cus_page.route('/orderslist/delete/<int:id>')
 def delete_orders(id):
     result = Orders.query.filter(Orders.id==id).first()
     db.session.delete(result)
     db.session.commit()
-    orders = Orders.query.all()
+    orders = Orders.query.filter(or_(Orders.status=="已发货", Orders.status=="已签收")).all()
     return render_template("customer/orderslist.html", orders=orders)
 
 
@@ -40,10 +40,9 @@ def receive():
         ord.status = "已签收"
         db.session.add(ord)
         db.session.commit()
-        orders = Orders.query.all()
         return render_template('customer/receiveorder_success.html')
-@cus_page.route('/orderslist/add', methods=['GET', 'POST'])
 
+@cus_page.route('/orderslist/add', methods=['GET', 'POST'])
 def add():
         id = request.form.get('id')
         o_name = request.form.get('o_name')
@@ -63,7 +62,6 @@ def add():
 def query():
     o_name = request.form.get('o_name')
     orders = Orders.query.filter(Orders.o_name==o_name).first()
-    print(111111)
     return render_template('customer/orders_query.html', orders=orders)
 
 
