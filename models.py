@@ -59,12 +59,18 @@ def create_data():
     c1 = Commodity("王老吉", 5)
     c2 = Commodity("可口可乐", 3)
     c3 = Commodity("旺旺雪饼", 4)
+    o1 = Orders("王老吉",'2019-03-13 11:35:52.13',"杭州","李四","13843558644","西安","已出库")
+    o2 = Orders("可口可乐",'2019-04-05 06:33:35.33',"上海","李四","13843558644","贵阳","已发货")
+    o3 = Orders("旺旺雪饼",'2019-03-05 01:53:55.63',"福州","李四","13843558644","西安","已出库")
     db.session.add(user1)
     db.session.add(user2)
     db.session.add(user3)
     db.session.add(c1)
     db.session.add(c2)
     db.session.add(c3)
+    db.session.add(o1)
+    db.session.add(o2)
+    db.session.add(o3)
     db.session.commit()
 
 
