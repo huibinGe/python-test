@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table>
+    <tr>
+        <td>订单名</td>
+        <td>时间</td>
+        <td>起始仓库</td>
+        <td>订货客户</td>
+        <td>电话</td>
+        <td>目的地</td>
+        <td>状态</td>
+    </tr>
+
+    <tr>
+        <td>{{ order.o_name }}</td>
+        <td>{{ order.o_time }}</td>
+        <td>{{ order.location }}</td>
+        <td>{{ order.person }}</td>
+        <td>{{ order.tel }}</td>
+        <td>{{ order.desc }}</td>
+        <td>{{ order.status }}</td>
+    </tr>
+
+</table>
+<ur class="sub">
+    <li><a class="" href="/logisticslist">
+        <span class="sub-menu-text">返回</span>></a>
+    </li>
+</ur>
+</body>
+</html>

@@ -2,9 +2,11 @@ from flask import Flask
 from .views.login import login_page
 from .views.bussiness import buss_page
 from .views.customer import cus_page
+from .views.logistics import logics_page
 from .extension import db
+
 app = Flask('python-test')
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:11111111@localhost:3306/user2'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://dacao:1735505@localhost:3306/python_test'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = "lalskskskskksksjsj"
 db.init_app(app)
@@ -12,4 +14,5 @@ db.init_app(app)
 app.register_blueprint(login_page)
 app.register_blueprint(buss_page)
 app.register_blueprint(cus_page)
+app.register_blueprint(logics_page)
 

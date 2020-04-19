@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="{{url_for('static', filename='jquery.min.js')}}"></script>
+    <script>
+
+     function deleteorders(id)
+     {
+        $.ajax({
+        url:'/logistics/delete/' + id,
+        dataType: 'html',
+        data:id,
+        success:function()
+        {
+            alert("删除成功")
+            location.reload(true);
+        }
+        })
+     }
+    </script>
+
+</head>
+<body>
+    <meta charset="UTF-8">
+    <title>订单</title>
+    <table>
+    <tr>
+        <td>编号</td>
+        <td>订单名</td>
+        <td>时间</td>
+        <td>起始地</td>
+        <td>客户</td>
+        <td>电话</td>
+        <td>目的地</td>
+        <td>状态</td>
+    </tr>
+        {# 我这里应当只能显示已入仓、已发货状态物流 #}
+        {# 没有物流单独的表，用订单的表 #}
+        {# 入仓的货物，点击发货，状态从入仓变成已发货#}
+        {% for order in orders %}
+    <tr>
+            <td>{{ order.id }}</td>
+            <td>{{ order.o_name }}</td>
+            <td>{{ order.o_time }}</td>
+            <td>{{ order.location }}</td>
+            <td>{{ order.person }}</td>
+            <td>{{ order.tel }}</td>
+            <td>{{ order.desc }}</td>
+            <td>{{ order.status }}</td>
+            <td><a href="{{url_for('logistics_page.outc', id=order.id)}}">发货</a></td>
+         <!--   <button onclick="deleteorders({{ order.id }})">删除</button> -->
+        </td>
+    </tr>
+        {% endfor %}
+    </table>
+<!--
+    <br>
+    <table>
+    <tr>
+        <td>订单名</td>
+        <td>时间</td>
+        <td>起始地</td>
+        <td>订货客户</td>
+        <td>电话</td>
+        <td>目的地</td>
+        <td>状态</td>
+    </tr>
+     <tr>
+        <form action="{{ url_for('logistics_page.add') }}" method="post">
+            <td><input type="text" name="o_name" class="form-control"> </td>
+            <td><input type="text" name="o_time"  class="form-control"> </td>
+            <td><input type="text" name="location"  class="form-control"> </td>
+            <td><input type="text" name="person" class="form-control"> </td>
+            <td><input type="text" name="tel"  class="form-control"></td>
+            <td><input type="text" name="desc"  class="form-control"></td>
+            <td><input type="text" name="comp"  class="form-control"></td>
+            <td><input type="text" name="status" class="form-control"></td>
+            <td>&nbsp;</td><td><input type="submit" name="submit" value="新增" /></td>
+        </form>
+    </tr>
+    </table>
+-->
+
+    <br>
+    <tr>
+        <form action="{{ url_for('logistics_page.query') }}" method="post">
+            <td>订单号: <input name="o_id" type="text" value=></td>
+            <td><input type="submit" name="submit" value="查询" /></td>
+        </form>
+    </tr>
+
+</body>
+</html>
