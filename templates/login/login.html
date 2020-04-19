@@ -10,14 +10,15 @@
 
 
   <div class="segment">
-      {% for message in get_flashed_messages() %}
-        <div class="alert">{{ message }}</div>
-      {% endfor %}
+
     <h1>Sign up</h1>
   </div>
 
   <label>
     <input type="text" placeholder="Username" name="name"/>
+    {% for message in get_flashed_messages() %}
+        <div class="alert">{{ message }}</div>
+    {% endfor %}
   </label>
   <label>
     <input type="password" placeholder="Password" name="password"/>
@@ -31,9 +32,8 @@
   </div>
 </form>
 <form action="{{ url_for('login_page.addinitdata') }}" method="post">
-<label>
-    <button type="submit" name="submit">导入数据</button>
-</label>
+  <button class="data-input" type="submit" name="submit">导入数据</button>
+
 
 </form>
 </body>

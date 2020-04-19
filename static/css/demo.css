@@ -74,6 +74,9 @@ button {
     display: block;
     width: 100%;
     color: #AE1100; }
+  button.data-input {
+    width: 100%;
+  }
 
 .input-group {
   display: flex;
@@ -82,3 +85,6 @@ button {
   .input-group label {
     margin: 0;
     flex: 1; }
+  .alert {
+    color: #AE1100;
+  }
