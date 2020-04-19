@@ -16,7 +16,7 @@ def query():
     order = Orders.query.get(id)
     return render_template("bussiness/orders_query.html", order=order)
 
-@buss_page.route('/outc/<id>', methods=['GET', 'POSt'])
+@buss_page.route('/outc/<id>',methods=['GET', 'POSt'])
 def outc(id):
     order = Orders.query.get(id)
     if request.method == 'GET':

@@ -7,7 +7,7 @@ from .views.warehouse import  ware_page
 from .extension import db
 
 app = Flask('python-test')
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:11111111@localhost:3306/user2'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:MYSQL@localhost:3306/user2'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = "lalskskskskksksjsj"
 db.init_app(app)
