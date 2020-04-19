@@ -60,8 +60,8 @@ def add():
 
 @cus_page.route('/orderslist/query',methods=['GET', 'POST'])
 def query():
-    o_name = request.form.get('o_name')
-    orders = Orders.query.filter(Orders.o_name==o_name).first()
+    o_id = request.form.get('o_id')
+    orders = Orders.query.filter(Orders.id==o_id).first()
     return render_template('customer/orders_query.html', orders=orders)
 
 

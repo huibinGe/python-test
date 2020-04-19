@@ -6,11 +6,13 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True)
     password = db.Column(db.String(120))
     types = db.Column(db.String(120))
-    def __init__(self, username, email, password, types):
+    gender = db.Column(db.Integer, default=0)
+    def __init__(self, username, email, password, types, gender):
         self.username = username
         self.email = email
         self.password = password
         self.types = types
+        self.gender = gender
 
     def __repr__(self):
         return '<User1 %r>' % self.username
@@ -55,10 +57,10 @@ class Orders(db.Model):
 def create_data():
     db.drop_all()
     db.create_all()
-    user1 = User("张三", "111@qq.com", "111111", "厂商")
-    user2 = User("李四", "222@qq.com", "222222", "商家")
-    user3 = User("王五", "333@qq.com", "333333", "物流公司")
-    user4 = User("霍六", "444@qq.com", "444444", "仓库")
+    user1 = User("张三", "111@qq.com", "111111", "厂商", 0)
+    user2 = User("李四", "222@qq.com", "222222", "商家", 0)
+    user3 = User("王五", "333@qq.com", "333333", "物流公司", 0)
+    user4 = User("霍六", "444@qq.com", "444444", "仓库", 0)
     c1 = Commodity("王老吉", 5)
     c2 = Commodity("可口可乐", 3)
     c3 = Commodity("旺旺雪饼", 4)
@@ -75,6 +77,7 @@ def create_data():
     db.session.add(user1)
     db.session.add(user2)
     db.session.add(user3)
+    db.session.add(user4)
     db.session.add(c1)
     db.session.add(c2)
     db.session.add(c3)

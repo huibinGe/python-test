@@ -3,6 +3,7 @@ from .views.login import login_page
 from .views.bussiness import buss_page
 from .views.customer import cus_page
 from .views.logistics import logics_page
+from .views.warehouse import  ware_page
 from .extension import db
 
 app = Flask('python-test')
@@ -15,4 +16,6 @@ app.register_blueprint(login_page)
 app.register_blueprint(buss_page)
 app.register_blueprint(cus_page)
 app.register_blueprint(logics_page)
+app.register_blueprint(ware_page)
+
 
