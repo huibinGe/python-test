@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>新增订单</title>
+</head>
+<body>
+<form action="{{ url_for('admin_page.order_add') }}" method="post">
+        <table>
+            <tr><td>订单名：</td><td><input  type="text" name="o_name" /></td></tr>
+            <tr><td>起始地：</td><td><input  type="text" name="location" /></td></tr>
+            <tr><td>订货客户：</td><td><input type="text" name="person" /></td></tr>
+            <tr><td>电话：</td><td><input type="text" name="tel" /></td></tr>
+            <tr><td>目的地：</td><td><input type="text" name="desc" /></td></tr>
+            <tr><td>快递公司：</td><td><input type="text" name="comp" /></td></tr>
+            <tr><td>状态：</td><td><input type="text" name="status" /></td></tr>
+
+            <tr><td> </td><td><input id="submit" type="submit" name="submit" value="新增" /></td></tr>
+        </table>
+    </form>
+</body>
+</html>

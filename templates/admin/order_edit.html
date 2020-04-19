@@ -1,0 +1,29 @@
+<html>
+
+<body>
+<h1>修改个人信息</h1>
+
+     {% for message in get_flashed_messages() %}
+         <div class="alert">{{ message }}</div>
+     {% endfor %}
+
+    <form action="{{ url_for('admin_page.order_edit', id=order.id) }}" method="post">
+        <table>
+            <tr><td>订单名：</td><td><input  type="text" name="o_name" value="{{ order.o_name }}"/></td></tr>
+            <tr><td>时间：</td><td><input type="text" name="o_time" value="{{ order.o_time }}"/></td></tr>
+            <tr><td>起始地：</td><td><input  type="text" name="location" value="{{ order.location }}"/></td></tr>
+            <tr><td>订货客户：</td><td><input type="text" name="person" value="{{ order.person }}"/></td></tr>
+            <tr><td>电话：</td><td><input type="text" name="tel" value="{{ order.tel }}"/></td></tr>
+            <tr><td>目的地：</td><td><input type="text" name="desc" value="{{ order.desc }}"/></td></tr>
+            <tr><td>快递公司：</td><td><input type="text" name="comp" value="{{ order.comp }}"/></td></tr>
+            <tr><td>状态：</td><td><input type="text" name="status" value="{{ order.status }}"/></td></tr>
+
+
+
+            <tr><td> </td><td><input id="submit" type="submit" name="submit" value="修改" /></td></tr>
+        </table>
+    </form>
+
+
+</body>
+</html>

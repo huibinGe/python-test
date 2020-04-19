@@ -59,10 +59,12 @@ def outc(id):
         desc = request.form.get("desc")
         tel = request.form.get("tel")
         person = request.form.get("person")
+        comp = request.form.get("comp")
         order = Orders.query.get(id)
         order.desc = desc
         order.tel = tel
         order.person = person
+        order.comp = comp
         order.status = "已发货"
         order.o_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
         db.session.add(order)

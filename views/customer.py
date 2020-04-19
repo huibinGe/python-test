@@ -20,27 +20,18 @@ def delete_orders(id):
 
 
 
-@cus_page.route('/orderslist/receive', methods=['GET', 'PoSt'])
-def receive():
-        id = request.form.get('id')
-        o_name = request.form.get('o_name')
-        o_time = request.form.get('o_time')
-        location = request.form.get('location')
-        person = request.form.get('person')
-        tel = request.form.get('tel')
-        desc = request.form.get('desc')
-        status = request.form.get('status')
-        ord = Orders.query.filter(Orders.id == int(id)).first()
-        ord.o_name = o_name
-        ord.o_time = o_time
-        ord.location = location
-        ord.person = person
-        ord.tel = tel
-        ord.desc = desc
-        ord.status = "已签收"
-        db.session.add(ord)
-        db.session.commit()
-        return render_template('customer/receiveorder_success.html')
+@cus_page.route('/orderslist/receive/<int:id>', methods=['GET', 'PoSt'])
+def receive(id):
+        ord = Orders.query.get(id)
+        if ord.status == "已签收":
+            message = "商品已被签收，无法签收"
+            return render_template('customer/error_page.html', message=message)
+
+        else:
+            ord.status = "已签收"
+            db.session.add(ord)
+            db.session.commit()
+            return render_template('customer/error_page.html',message="签收成功")
 
 @cus_page.route('/orderslist/add', methods=['GET', 'POST'])
 def add():

@@ -9,9 +9,11 @@ login_page = Blueprint('login_page', __name__)
 def users():
     id = session.get('user_id')
     if id:
-        print(id)
         user = User.query.get(int(id))
-        return render_template('login/index.html', user=user)
+        if user.types== "管理员":
+            return render_template('admin/index.html')
+        else:
+            return render_template('login/index.html', user=user)
     else:
         return redirect('/')
 
@@ -73,3 +75,4 @@ def go_page(id):
         return render_template('logistics/index.html')
     elif user.types == "仓库":
         return render_template('warehouse/index.html')
+

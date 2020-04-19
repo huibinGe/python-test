@@ -32,6 +32,7 @@
         <td>客户</td>
         <td>电话</td>
         <td>目的地</td>
+        <td>快递公司</td>
         <td>状态</td>
     </tr>
         {# 我这里应当只能显示已入仓、已发货状态物流 #}
@@ -46,6 +47,7 @@
             <td>{{ order.person }}</td>
             <td>{{ order.tel }}</td>
             <td>{{ order.desc }}</td>
+            <td>{{ order.comp }}</td>
             <td>{{ order.status }}</td>
             <td><a href="{{url_for('logistics_page.outc', id=order.id)}}">发货</a></td>
          <!--   <button onclick="deleteorders({{ order.id }})">删除</button> -->

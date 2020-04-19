@@ -1,0 +1,27 @@
+<html>
+
+<body>
+<h1>修改个人信息</h1>
+
+     {% for message in get_flashed_messages() %}
+         <div class="alert">{{ message }}</div>
+     {% endfor %}
+
+    <form action="{{ url_for('admin_page.user_edit', id=user.id) }}" method="post">
+        <table>
+            <tr><td>用户名：</td><td><input id="name" type="text" name="username" value="{{ user.username }}"/></td></tr>
+            <tr><td>Email：</td><td><input id="email" type="text" name="email" value="{{ user.email }}"/></td></tr>
+            <tr><td>密码：</td><td><input id="password" type="text" name="password" value="{{ user.password }}"/></td></tr>
+
+            <tr><td>性别：</td>
+                <td>
+                    <input type="radio" name="gender" value="0" {% if user.gender == 0 %}checked {% endif %}/>男
+                    <input type="radio" name="gender" value="1" {% if user.gender == 1 %}checked {% endif %}/>女
+                </td></tr>
+            <tr><td> </td><td><input id="submit" type="submit" name="submit" value="修改" /></td></tr>
+        </table>
+    </form>
+
+
+</body>
+</html>

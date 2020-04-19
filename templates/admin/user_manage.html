@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户管理</title>
+</head>
+<body>
+<a href="/userlist">返回</a>
+<table>
+
+ <tr>
+        <td>姓名</td>
+        <td>邮箱</td>
+        <td>用户</td>
+        <td>密码</td>
+        <td>性别</td>
+
+
+ </tr>
+ {% for user in users %}
+ <tr>
+        <td>{{ user.username }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.types }}</td>
+        <td>{{ user.password }}</td>
+        <td>{{ user.gender }}</td>
+        <td><a href="{{ url_for('admin_page.user_edit', id=user.id) }}">修改</a></td>
+        <td><a href="{{ url_for('admin_page.user_delete', id=user.id) }}">删除</a></td>
+
+
+ </tr>
+ {% endfor %}
+</table>
+<a href="{{ url_for('admin_page.user_add') }}">新增</a></td>
+
+</body>
+</html>

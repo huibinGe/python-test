@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户管理</title>
+</head>
+<body>
+<a href="/userlist">返回</a>
+<table>
+
+ <tr>
+      <tr>
+        <td>编号</td>
+        <td>订单名</td>
+        <td>时间</td>
+        <td>起始地</td>
+        <td>订货客户</td>
+        <td>电话</td>
+        <td>目的地</td>
+        <td>快递公司</td>
+        <td>状态</td>
+    </tr>
+
+
+ </tr>
+ {% for order in orders %}
+ <tr>
+        <td>{{ order.id }}</td>
+        <td>{{ order.o_name }}</td>
+        <td>{{ order.o_time }}</td>
+        <td>{{ order.location }}</td>
+        <td>{{ order.person }}</td>
+        <td>{{ order.tel }}</td>
+        <td>{{ order.desc }}</td>
+        <td>{{ order.comp }}</td>
+        <td>{{ order.status }}</td>
+        <td><a href="{{ url_for('admin_page.order_edit', id=order.id) }}">修改</a></td>
+        <td><a href="{{ url_for('admin_page.order_delete', id=order.id) }}">删除</a></td>
+
+
+ </tr>
+ {% endfor %}
+</table>
+<a href="{{ url_for('admin_page.order_add') }}">新增</a></td>
+
+</body>
+</html>

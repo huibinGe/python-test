@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>新增订单</title>
+</head>
+<body>
+<form action="{{ url_for('bussiness_page.add') }}" method="post">
+        <table>
+            <tr><td>订单名：</td><td><input  type="text" name="o_name" /></td></tr>
+            <tr><td>产地地：</td><td><input  type="text" name="location" /></td></tr>
+            <tr><td> </td><td><input id="submit" type="submit" name="submit" value="新增" /></td></tr>
+        </table>
+    </form>
+</body>
+</html>

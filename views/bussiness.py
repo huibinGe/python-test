@@ -41,5 +41,22 @@ def outc(id):
         orders = Orders.query.filter(or_(Orders.status == "已出厂", Orders.status == "已生产")).all()
         return render_template("bussiness/error_page.html", message="出仓成功")
 
+@buss_page.route('/add', methods=['GET', 'POSt'])
+def add():
+    if request.method == 'GET':
+        return render_template('bussiness/add.html')
+    else:
+        o_name = request.form.get("o_name")
+        location = request.form.get("location")
+        o_time  = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+        status = "已生产"
+        person = ""
+        tel = ""
+        desc = ""
+        comp = ""
+        order = Orders(o_name, o_time, location, person, tel, desc, comp, status )
+        db.session.add(order)
+        db.session.commit()
+        return render_template("bussiness/error_page.html", message="新增成功")
 
 

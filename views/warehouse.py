@@ -22,23 +22,6 @@ def delete_commodities(id):
 
 
 
-@ware_page.route('/warehouselist/edit', methods=['GET', 'PoSt'])
-def edit():
-        id = request.form.get('id')
-        name = request.form.get('name')
-        price = request.form.get('price')
-        location=request.form.get('location')
-        o_time=time.localtime(time.time())
-        co = Orders.query.filter(Orders.id == int(id)).first()
-        co.name = name
-        co.price = price
-        co.location=location
-        co.i_time=o_time
-        co.status="已入仓"
-        db.session.add(co)
-        db.session.commit()
-        commodity = Commodity.query.all()
-        return render_template('warehouse/warehouse_success.html')
 
 
 @ware_page.route('/warehouselist/query',methods=['GET', 'POST'])
@@ -52,10 +35,10 @@ def out(id):
     order = Orders.query.get(id)
     if request.method == 'GET':
         if order.status=="已入仓":
-            message = "商品已经入库，无法入库"
+            message = "商品已经入仓，无法入仓"
             return render_template('warehouse/error_page.html', message=message)
         else:
-            return render_template('warehouse/out.html', order=order)
+            return render_template("warehouse/out.html", order=order)
     else:
         id = request.form.get("id")
         desc =request.form.get("desc")
