@@ -2,7 +2,7 @@
 <html>
 <head>
 <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-<link rel="stylesheet" href="{{ url_for('static', filename='/css/demo.css') }}" type="text/css">
+<link rel="stylesheet" href="{{ url_for('static', filename='/css/login.css') }}" type="text/css">
 </head>
 <body>
 
@@ -16,15 +16,15 @@
 
   <label>
     <input type="text" placeholder="Username" name="name"/>
-    {% for message in get_flashed_messages() %}
-        <div class="alert">{{ message }}</div>
-    {% endfor %}
+
   </label>
   <label>
     <input type="password" placeholder="Password" name="password"/>
   </label>
   <button class="red" type="submit" name="submit"><i class="fa fa-lock"></i> Log in</button>
-
+    {% for message in get_flashed_messages() %}
+        <p class="alert">{{ message }}</p>
+    {% endfor %}
   <div class="segment">
     <button class="unit" type="button"><i class="fa fa-mail-reply"></i></button>
     <button class="unit" type="button"><i class="fa fa-star"></i></button>

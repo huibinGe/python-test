@@ -1,58 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script src="{{url_for('static', filename='jquery.min.js')}}"></script>
-
-    <script>
-
-     function deletecommodity(id)
-     {
-        $.ajax({
-        url:'/warehouse/delete/' + id,
-        dataType: 'html',
-        data:id,
-        success:function()
-        {
-            alert("删除成功")
-            location.reload(true);
-        }
-        })
-     }
-    </script>
-
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='/css/list.css') }}" type="text/css">
 </head>
 <body>
     <meta charset="UTF-8">
     <title>商品</title>
-    <table>
-    <tr>
-        <td>编号</td>
-        <td>商品名</td>
-        <td>入仓时间</td>
-        <td>仓库位置</td>
-        <td>状态</td>
-    </tr>
-        {% for order in orders %}
-    <tr>
-            <td>{{ order.id }}</td>
-            <td>{{ order.o_name }}</td>
-            <td>{{ order.o_time }}</td>
-            <td>{{ order.location }} </td>
-            <td>{{ order.status }}</td>
-            <td><a href="{{url_for('warehouse_page.out', id=order.id)}}">入仓</a></td>
+<form>
+    <div class="radiogroup">
+        <table>
+            <tr>
 
-    </tr>
-        {% endfor %}
+            <td><span class="text">编号</span></td>
+            <td><span class="text">商品</span></td>
+            <td><span class="text">入仓时间</span></td>
+            <td><span class="text">仓库位置</span></td>
+            <td><span class="text">状态</span></td>
+  </tr>
+    {% for order in orders %}
+  <tr>
+        <td><span class="text">{{ order.id }}</span></td>
+        <td><span class="text">{{ order.o_name}}</span></td>
+        <td><span class="text">{{ order.o_time }}</span></td>
+        <td><span class="text">{{ order.location }}</span></td>
+        <td><span class="text">{{ order.status }}</span></td>
+        <td><button class="data-input" type="submit" name="submit" href="{{url_for('warehouse_page.out', id=order.id)}}" >入仓</button></td>
+  </tr>
+    {% endfor %}
+</table>
+    </div>
+</form>
+    <form action="{{ url_for('warehouse_page.query') }}" method="post">
+<div class="input-group">
+    <label class="search">
+      <input type="text" placeholder="名称查询"/>
+    </label>
+    <button class="unit" type="submit"><i class="fa fa-search"></i></button>
+  </div>
+    </form>
 
 
-    </table>
+</div>
 
-    <tr>
-        <form action="{{ url_for('warehouse_page.query') }}" method="post">
-            <td>名称: <input name="name" type="text" value=></td>
-            <td><input type="submit" name="submit" value="查询" /></td>
-        </form>
-    </tr>
+
+
+
 
 </body>
 </html>

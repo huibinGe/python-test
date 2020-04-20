@@ -1,6 +1,11 @@
 @charset "utf-8";
 body, html {
-  background-color: #EBECF0; }
+  background-color: #EBECF0;
+    width:100%;
+height: 100%}
+body {background-image: url(../image/nature1.jpg);
+ background-size: 100%;
+        background-repeat:no-repeat;}
 
 body, p, input, select, textarea, button {
   font-family: 'Montserrat', sans-serif;
@@ -8,12 +13,12 @@ body, p, input, select, textarea, button {
   font-size: 16px; }
 
 div, p {
-  color: #BABECC;
-  text-shadow: 1px 1px 1px #FFF; }
+  color: #ffffff;
+  }
 
 form {
-  padding: 16px;
-  width: 320px;
+  padding: 10px;
+  width: 1000px;
   margin: 0 auto; }
 
 .segment {
@@ -75,7 +80,7 @@ button {
     width: 100%;
     color: #AE1100; }
   button.data-input {
-    width: 100%;
+    width: 96px;
   }
 
 .input-group {
@@ -87,4 +92,35 @@ button {
     flex: 1; }
   .alert {
     color: #AE1100;
+      font-size: 16px;
+      font-weight: bold;
+      text-align: center;
+      text-shadow: 0;
+      letter-spacing: 5px;
   }
+
+  .radiogroup {
+  padding: 20px 20px;
+  border-radius: 16px;
+  box-shadow: 4px 4px 4px 0px #d1d9e6 inset, -4px -4px 4px 0px #ffffff inset;
+}
+
+
+
+.text{
+  font-family: "微软雅黑";
+  letter-spacing: -0.2px;
+  font-size: 20px;
+  font-weight: bold;
+    padding: 32px 0;
+  text-align: center;
+}
+
+table{
+  border-collapse: separate;
+  border-spacing: 10px 5px;
+}
+
+td{
+  width: 20%;
+}
