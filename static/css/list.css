@@ -18,7 +18,7 @@ div, p {
 
 form {
   padding: 10px;
-  width: 1000px;
+  width: 500px;
   margin: 0 auto; }
 
 .segment {
@@ -61,7 +61,7 @@ button {
     box-shadow: -2px -2px 5px #FFF, 2px 2px 5px #BABECC; }
   button:active {
     box-shadow: inset 1px 1px 2px #BABECC, inset -1px -1px 2px #FFF; }
-  button .icon {
+  button .fa {
     margin-right: 8px; }
   button.unit {
     border-radius: 8px;
@@ -103,6 +103,8 @@ button {
   padding: 20px 20px;
   border-radius: 16px;
   box-shadow: 4px 4px 4px 0px #d1d9e6 inset, -4px -4px 4px 0px #ffffff inset;
+    width:70%;
+margin: 0 auto;
 }
 
 

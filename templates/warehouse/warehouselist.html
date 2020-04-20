@@ -3,13 +3,15 @@
 <head>
 <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 <link rel="stylesheet" href="{{ url_for('static', filename='/css/list.css') }}" type="text/css">
+
+
 </head>
 <body>
     <meta charset="UTF-8">
     <title>商品</title>
-<form>
+
     <div class="radiogroup">
-        <table>
+       <table>
             <tr>
 
             <td><span class="text">编号</span></td>
@@ -19,18 +21,23 @@
             <td><span class="text">状态</span></td>
   </tr>
     {% for order in orders %}
+<form action="{{url_for('warehouse_page.out', id=order.id)}}">
   <tr>
         <td><span class="text">{{ order.id }}</span></td>
         <td><span class="text">{{ order.o_name}}</span></td>
         <td><span class="text">{{ order.o_time }}</span></td>
         <td><span class="text">{{ order.location }}</span></td>
         <td><span class="text">{{ order.status }}</span></td>
-        <td><button class="data-input" type="submit" name="submit" href="{{url_for('warehouse_page.out', id=order.id)}}" >入仓</button></td>
+      <td><button type="submit"  class="data-input">出仓</button></td>
+
   </tr>
-    {% endfor %}
-</table>
-    </div>
 </form>
+    {% endfor %}
+<tr>
+    <td>{{ paginate.links }}</td>
+</tr>
+        </table>
+    </div>
     <form action="{{ url_for('warehouse_page.query') }}" method="post">
 <div class="input-group">
     <label class="search">
