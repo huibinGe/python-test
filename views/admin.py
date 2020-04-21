@@ -1,6 +1,8 @@
 from flask import Blueprint, render_template, session, redirect, request, url_for, flash
 from ..models import User, Orders
 from ..extension import db
+from flask_paginate import Pagination, get_page_parameter
+
 import time
 
 admin_page = Blueprint('admin_page', __name__)
@@ -10,15 +12,28 @@ def index():
     return render_template('admin/index.html')
 
 @admin_page.route('/admin_page/users')
-def users():
-    users = User.query.all()
-    return render_template('admin/user_manage.html', users = users)
+def users(limit=10):
+    id = session.get('user_id')
+    user = User.query.get(id)
+    data = User.query.all()
+    page = int(request.args.get("page", 1))
+    start = (page - 1) * limit
+    end = page * limit if len(data) > page * limit else len(data)
+    pagination = Pagination(css_framework='bootstrap4', page=page, total=len(data), outer_window=0, inner_window=1)
+    ret = User.query.slice(start, end)
+    return render_template("admin/user_manage.html", users=ret, pagination=pagination, user=user)
 
 @admin_page.route('/admin_page/orders')
-def orders():
-    orders = Orders.query.all()
-    return render_template('admin/order_manage.html', orders = orders)
-
+def orders(limit=10):
+    id = session.get('user_id')
+    user = User.query.get(id)
+    data = Orders.query.all()
+    page = int(request.args.get("page", 1))
+    start = (page - 1) * limit
+    end = page * limit if len(data) > page * limit else len(data)
+    pagination = Pagination(css_framework='bootstrap4', page=page, total=len(data), outer_window=0, inner_window=1)
+    ret = Orders.query.slice(start, end)
+    return render_template("admin/order_manage.html", orders=ret, pagination=pagination, user=user)
 
 @admin_page.route('/admin_page/user/edit/<id>', methods=['GET', 'POST'])
 def user_edit(id):

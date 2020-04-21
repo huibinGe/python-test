@@ -1,25 +1,54 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>厂商</title>
+    <link rel="stylesheet" href="../../static/assets/css/layui.css">
+    <link rel="stylesheet" href="../../static/assets/css/view.css"/>
+    <link rel="stylesheet" href="../../static/assets/css/admin.css"/>
 </head>
-<body>
-<h1>登陆界面</h1>
-     {% for message in get_flashed_messages() %}
-         <div class="alert">{{ message }}</div>
-     {% endfor %}
-    <form action="{{ url_for('bussiness_page.outc', id=order.id) }}" method="post">
-        <table>
-            <tr><td>订单号：</td><td><input type="text" name="id" value="{{order.id}}" readonly="readonly"/></td></tr>
-            <tr><td>商品名：</td><td><input type="text" name="o_name" value="{{order.o_name}}" readonly="readonly"/></td>
-            <tr><td>生产时间：</td><td><input type="text" name="o_time" value="{{order.o_time}}"readonly="readonly"/></td>
-            <tr><td>状态：</td><td><input type="text" name="status" value="{{order.status}}" readonly="readonly"/></td>
-            <tr><td>仓库地址：</td><td><input type="text" name="desc" /></td>
-            <tr><td>仓库联系人：</td><td><input type="text" name="person" /></td>
-            <tr><td>仓库电话：</td><td><input type="text" name="tel" /></td>
-            <tr><td>&nbsp;</td><td><input type="submit" name="submit" value="出厂" /></td></tr>
-        </table>
-    </form>
+<body class="layui-view-body">
+    <div class="layui-content">
+    	<!--面包屑导航-->
+    	<div class="mianb">
+    		<div class="mblf layui-col-xs6 layui-col-md6">
+    			 <i class="layui-icon">&#xe656;</i>
+    			 <p>物流追踪管理 > <span>生产商</span></p>
+    		</div>
+    		<div class="mbrt layui-col-xs6 layui-col-md6">
+    			<a href="/corderslist" class="layui-btn layui-btn-normal" >返回</a>
+    		</div>
+    	</div>
+    	<!--面包屑导航-->
+        <div class="layui-row">
+            <div class="layui-card">
+            	<div class="table-responsive">
+                    <form action="{{ url_for('bussiness_page.outc', id=order.id) }}" method="post">
+                        <table class="layui-table" lay-skin="line" lay-size="lg" id="table">
+                            <tr><td>订单号：</td><td><input type="text" name="id" value="{{order.id}}" readonly="readonly"/></td></tr>
+                            <tr><td>商品名：</td><td><input type="text" name="o_name" value="{{order.o_name}}" readonly="readonly"/></td>
+                            <tr><td>生产时间：</td><td><input type="text" name="o_time" value="{{order.o_time}}"readonly="readonly"/></td>
+                            <tr><td>状态：</td><td><input type="text" name="status" value="{{order.status}}" readonly="readonly"/></td>
+                            <tr><td>仓库地址：</td><td><input type="text" name="desc" /></td>
+                            <tr><td>仓库联系人：</td><td><input type="text" name="person" /></td>
+                            <tr><td>仓库电话：</td><td><input type="text" name="tel" /></td>
+                            <tr><td>&nbsp;</td><td><input type="submit" name="submit" value="出厂" class="layui-btn layui-btn-normal" /></td></tr>
+                        </table>
+                    </form>
+			 	</div>
+
+           		<!--分页-->
+           		<div id="page"></div>
+           		<!--分页-->
+            </div>
+        </div>
+    </div>
+   	</div>
+        <script src="../../static/assets/layui.js"></script>
+        <script src="../../static/index.js" data-main="home"></script>
+            <script src="../../static/home.js"></script>
+        </div>
+
 </body>
 </html>

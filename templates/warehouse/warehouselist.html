@@ -1,58 +1,92 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <script src="{{url_for('static', filename='jquery.min.js')}}"></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>仓库</title>
+    <link rel="stylesheet" href="../../static/assets/css/layui.css">
+    <link rel="stylesheet" href="../../static/assets/css/view.css"/>
+    <link rel="stylesheet" href="../../static/assets/css/admin.css"/>
+    <link rel="stylesheet" href="../../static/bootstrap.min.css">
+    <script src="../../static/jquery.min.js"></script>
+    <script src="../../static/popper.min.js"></script>
+    <script src="../../static/bootstrap.min.js"></script>
 
-    <script>
-
-     function deletecommodity(id)
-     {
-        $.ajax({
-        url:'/warehouse/delete/' + id,
-        dataType: 'html',
-        data:id,
-        success:function()
-        {
-            alert("删除成功")
-            location.reload(true);
-        }
-        })
-     }
-    </script>
 
 </head>
-<body>
-    <meta charset="UTF-8">
-    <title>商品</title>
-    <table>
-    <tr>
-        <td>编号</td>
-        <td>商品名</td>
-        <td>入仓时间</td>
-        <td>仓库位置</td>
-        <td>状态</td>
-    </tr>
-        {% for order in orders %}
-    <tr>
-            <td>{{ order.id }}</td>
-            <td>{{ order.o_name }}</td>
-            <td>{{ order.o_time }}</td>
-            <td>{{ order.location }} </td>
-            <td>{{ order.status }}</td>
-            <td><a href="{{url_for('warehouse_page.out', id=order.id)}}">入仓</a></td>
+<body class="layui-view-body">
+        <div class="layui-content">
+    	<!--面包屑导航-->
+    	    <div class="mianb">
+    		    <div class="mblf layui-col-xs6 layui-col-md6">
+    			     <i class="layui-icon">&#xe656;</i>
+    			    <p>物流追踪管理 > <span>仓库</span></p>
+    		    </div>
+                <tr>
+                    <th>你好，{{user.username}}</th>
+                </tr>
+                <tr>
+                    <th><a href="{{ url_for('login_page.edit', id=user.id) }}" class="layui-btn layui-btn-normal layui-btn-xs">用户修改</a></th>
+                    <th><a href="{{ url_for('login_page.exit') }}" class="layui-btn layui-btn-normal layui-btn-xs">退出</a></th>
+                </tr>
+    	    </div>
+    	<!--面包屑导航-->
+            <div class="layui-row">
+                <div class="layui-card">
+            	    <div class="table-responsive">
+	                        <table class="layui-table" lay-skin="line" lay-size="lg" id="table">
+						      <thead>
+						        <tr>
+                                    <th>#</th>
+                                    <th>编号</th>
+                                    <th>商品</th>
+                                    <th>入仓时间</th>
+                                    <th>仓库位置</th>
+                                    <th>状态</th>
+                                    <th>操作</th>
 
-    </tr>
-        {% endfor %}
+						        </tr>
+						    </thead>
+						    <tbody>
+                            {% for order in orders %}
+						        <tr>
+                                    <td>{{ loop.index + pagination.skip }}</td>
+                                     <td><span class="text">{{ order.id }}</span></td>
+                                    <td>{{ order.o_name }}</td>
+                                    <td>{{ order.o_time }}</td>
+                                    <td>{{ order.location }} </td>
+                                    <td>{{ order.status }}</td>
+                                    <td>
+                                    <div class="layui-table-cell laytable-cell-1-0-10">
+							      	      	<a class="layui-btn layui-btn-normal layui-btn-xs" href="{{url_for('warehouse_page.out', id=order.id)}}">入仓</a>
+							      	  	    <a class="layui-btn layui-btn-danger layui-btn-xs delete">详情</a>
+                                    </div>
+                                    </td>
+						        </tr>
+                            {% endfor %}
 
+                            </tbody>
+					    </table>
+                        {{ pagination.info }}
+                        <tr>
+                            {{ pagination.links }}
+                        </tr>
+			 	    </div>
 
-    </table>
+            </div>
+        </div>
 
-    <tr>
-        <form action="{{ url_for('warehouse_page.query') }}" method="post">
-            <td>订单号: <input name="o_id" type="text" value=></td>
-            <td><input type="submit" name="submit" value="查询" /></td>
-        </form>
-    </tr>
-
+        <div class="mianb">
+    		<div class="mbrt layui-col-xs6 layui-col-md6">
+                 <form action="{{ url_for('warehouse_page.query', id=user.id) }}" method="post">
+                <td>订单号: <input name="o_id" type="text" value=></td>
+                <td><input type="submit" name="submit" value="查询" class="layui-btn layui-btn-normal"/></td>
+                </form>
+    		</div>
+    	</div>
+        <script src="../../static/assets/layui.js"></script>
+        <script src="../../static/index.js" data-main="home"></script>
+            <script src="../../static/home.js"></script>
+        </div>
 </body>
 </html>

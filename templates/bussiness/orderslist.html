@@ -1,42 +1,98 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-</head>
-<body>
     <meta charset="UTF-8">
-    <title>订单</title>
-    <table>
-    <tr>
-        <td>编号</td>
-        <td>订单名</td>
-        <td>时间</td>
-        <td>产地</td>
-        <td>联系人</td>
-        <td>电话</td>
-        <td>状态</td>
-    </tr>
-        {% for order in orders %}
-    <tr>
-            <td>{{ order.id }}</td>
-            <td>{{ order.o_name }}</td>
-            <td>{{ order.o_time }}</td>
-            <td>{{ order.location }} </td>
-            <td>{{ order.person }} </td>
-            <td>{{ order.tel }}</td>
-            <td>{{ order.status }}</td>
-            <td><a href="{{url_for('bussiness_page.outc', id=order.id)}}">出厂</a></td>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>厂商</title>
+    <link rel="stylesheet" href="../../static/assets/css/layui.css">
+    <link rel="stylesheet" href="../../static/assets/css/view.css"/>
+    <link rel="stylesheet" href="../../static/assets/css/admin.css"/>
+    <link rel="stylesheet" href="../../static/bootstrap.min.css">
+    <script src="../../static/jquery.min.js"></script>
+    <script src="../../static/popper.min.js"></script>
+    <script src="../../static/bootstrap.min.js"></script>
 
-    </tr>
-        {% endfor %} 
 
-    </table>
-    <tr>
-        <form action="{{ url_for('bussiness_page.query') }}" method="post">
-            <td>订单号: <input name="o_id" type="text" value=></td>
-            <td><input type="submit" name="submit" value="查询" /></td>
-        </form>
-    </tr>
-    <td><a href="{{url_for('bussiness_page.add')}}">新增订单</a></td>
+</head>
+<body class="layui-view-body">
+        <div class="layui-content">
+    	<!--面包屑导航-->
+    	    <div class="mianb">
+    		    <div class="mblf layui-col-xs6 layui-col-md6">
+    			     <i class="layui-icon">&#xe656;</i>
+    			    <p>物流追踪管理 > <span>生产商</span></p>
+    		    </div>
+                <tr>
+                    <th>你好，{{user.username}}</th>
+                </tr>
+                <tr>
+                    <th><a href="{{ url_for('login_page.edit', id=user.id) }}" class="layui-btn layui-btn-normal layui-btn-xs">用户修改</a></th>
+                    <th><a href="{{ url_for('login_page.exit') }}" class="layui-btn layui-btn-normal layui-btn-xs">退出</a></th>
+                </tr>
+    	    </div>
+    	<!--面包屑导航-->
+            <div class="layui-row">
+                <div class="layui-card">
+            	    <div class="table-responsive">
+	                        <table class="layui-table" lay-skin="line" lay-size="lg" id="table">
+						      <thead>
+						        <tr>
+                                    <th>#</th>
+                                    <th>编号</th>
+                                    <th>订单名</th>
+                                    <th>时间</th>
+                                    <th>产地</th>
+                                    <th>联系人</th>
+                                    <th>电话</th>
+                                    <th>状态</th>
+                                    <th>操作</th>
+						        </tr>
+						    </thead>
+						    <tbody>
+                            {% for order in orders %}
+						        <tr>
+                                    <td>{{ loop.index + pagination.skip }}</td>
+                                    <td>{{ order.id }}</td>
+                                    <td>{{ order.o_name }}</td>
+                                    <td>{{ order.o_time }}</td>
+                                    <td>{{ order.location }} </td>
+                                    <td>{{ order.person }} </td>
+                                    <td>{{ order.tel }}</td>
+                                    <td>{{ order.status }}</td>
+                                    <td>
+                                    <div class="layui-table-cell laytable-cell-1-0-10">
+							      	      	<a class="layui-btn layui-btn-normal layui-btn-xs" href="{{url_for('bussiness_page.outc', id=order.id)}}">出厂</a>
+							      	  	    <a class="layui-btn layui-btn-danger layui-btn-xs delete">详情</a>
+                                    </div>
+                                    </td>
+						        </tr>
+                            {% endfor %}
 
+                            </tbody>
+					    </table>
+                        {{ pagination.info }}
+                        <tr>
+                            {{ pagination.links }}
+                        </tr>
+			 	    </div>
+
+            </div>
+        </div>
+
+        <div class="mianb">
+    		<div class="mbrt layui-col-xs6 layui-col-md6">
+                 <form action="{{ url_for('bussiness_page.query', id=user.id) }}" method="post">
+                <td>订单号: <input name="o_id" type="text" value=></td>
+                <td><input type="submit" name="submit" value="查询" class="layui-btn layui-btn-normal"/></td>
+                </form>
+    		</div>
+    		<div class="mbrt layui-col-xs6 layui-col-md6">
+    			<a href="{{url_for('bussiness_page.add', id=user.id)}}" class="layui-btn layui-btn-normal" id="addbanner">新增订单</a>
+    		</div>
+    	</div>
+        <script src="../../static/assets/layui.js"></script>
+        <script src="../../static/index.js" data-main="home"></script>
+            <script src="../../static/home.js"></script>
+        </div>
 </body>
 </html>

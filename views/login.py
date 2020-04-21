@@ -11,9 +11,15 @@ def users():
     if id:
         user = User.query.get(int(id))
         if user.types== "管理员":
-            return render_template('admin/index.html')
-        else:
-            return render_template('login/index.html', user=user)
+            return redirect(url_for('admin_page.orders'))
+        elif user.types == "厂商":
+            return redirect(url_for('bussiness_page.list_all_orders'))
+        elif user.types == "商家":
+            return redirect(url_for('customer_page.list_all_orders'))
+        elif user.types == "物流公司":
+            return redirect(url_for('logistics_page.list_all_commodities'))
+        elif user.types == "仓库":
+            return redirect(url_for('warehouse_page.list_all_commodities'))
     else:
         return redirect('/')
 
@@ -61,18 +67,9 @@ def edit(id):
         user.gender = gender
         user.email = email
         db.session.commit()
-        session['user_id'] = user.id
-        return redirect(url_for('login_page.users'))
+        message = "修改成功"
+        return render_template('login/error_page.html', message=message)
 
-@login_page.route('/go_page/<id>')
-def go_page(id):
-    user = User.query.get(id)
-    if user.types == "厂商":
-        return render_template('bussiness/index.html')
-    elif user.types == "商家":
-        return render_template('customer/index.html')
-    elif user.types == "物流公司":
-        return render_template('logistics/index.html')
-    elif user.types == "仓库":
-        return render_template('warehouse/index.html')
-
+@login_page.route('/exit', methods=['GET', 'POST'])
+def exit():
+    return render_template('login/login.html')

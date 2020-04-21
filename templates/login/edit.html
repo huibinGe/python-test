@@ -1,27 +1,48 @@
-<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>新增订单</title>
+    <link rel="stylesheet" href="../../static/assets/css/layui.css">
+    <link rel="stylesheet" href="../../static/assets/css/view.css"/>
+    <link rel="stylesheet" href="../../static/assets/css/admin.css"/>
+</head>
+<body class="layui-view-body">
+    <div class="layui-content">
+    	<!--面包屑导航-->
+    	<div class="mianb">
+    		<div class="mblf layui-col-xs6 layui-col-md6">
+    			 <i class="layui-icon">&#xe656;</i>
+    			 <p>物流追踪管理 > <span>生产商</span></p>
+    		</div>
+    		<div class="mbrt layui-col-xs6 layui-col-md6">
+    			<a href="{{url_for('login_page.users')}}" class="layui-btn layui-btn-normal" >返回</a>
+    		</div>
+    	</div>
+    	<!--面包屑导航-->
+        <div class="layui-row">
+            <div class="layui-card">
+            	<div class="table-responsive">
+                    <form action="{{ url_for('login_page.edit', id=user.id) }}" method="post">
+                        <table class="layui-table" lay-skin="line" lay-size="lg" id="table">
+                            <tr><td>用户名：</td><td><input id="name" type="text" name="username" value="{{ user.username }}"/></td></tr>
+                            <tr><td>Email：</td><td><input id="email" type="text" name="email" value="{{ user.email }}"/></td></tr>
+                            <tr><td>密码：</td><td><input id="password" type="text" name="password" value="{{ user.password }}"/></td></tr>
+                            <tr><td>性别：</td>
+                                <td>
+                                    <input type="radio" name="gender" value="0" {% if user.gender == 0 %}checked {% endif %}/>男
+                                    <input type="radio" name="gender" value="1" {% if user.gender == 1 %}checked {% endif %}/>女
+                                </td></tr>
+                            <tr><td> </td><td><input id="submit" type="submit" name="submit" value="修改"  class="layui-btn layui-btn-normal" /></td></tr>
+                        </table>
+                    </form>
+			 	</div>
 
-<body>
-<h1>修改个人信息</h1>
-
-     {% for message in get_flashed_messages() %}
-         <div class="alert">{{ message }}</div>
-     {% endfor %}
-
-    <form action="{{ url_for('login_page.edit', id=user.id) }}" method="post">
-        <table>
-            <tr><td>用户名：</td><td><input id="name" type="text" name="username" value="{{ user.username }}"/></td></tr>
-            <tr><td>Email：</td><td><input id="email" type="text" name="email" value="{{ user.email }}"/></td></tr>
-            <tr><td>密码：</td><td><input id="password" type="text" name="password" value="{{ user.password }}"/></td></tr>
-
-            <tr><td>性别：</td>
-                <td>
-                    <input type="radio" name="gender" value="0" {% if user.gender == 0 %}checked {% endif %}/>男
-                    <input type="radio" name="gender" value="1" {% if user.gender == 1 %}checked {% endif %}/>女
-                </td></tr>
-            <tr><td> </td><td><input id="submit" type="submit" name="submit" value="修改" /></td></tr>
-        </table>
-    </form>
-
+           		<!--分页-->
+           		<div id="page"></div>
+           		<!--分页-->
+            </div>
+        </div>
+    </div>
 
 </body>
 </html>

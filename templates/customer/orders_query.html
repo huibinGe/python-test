@@ -1,34 +1,72 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>厂商</title>
+    <link rel="stylesheet" href="../../static/assets/css/layui.css">
+    <link rel="stylesheet" href="../../static/assets/css/view.css"/>
+    <link rel="stylesheet" href="../../static/assets/css/admin.css"/>
 </head>
-<body>
-<table>
-    <tr>
-        <td>订单名</td>
-        <td>时间</td>
-        <td>起始仓库</td>
-        <td>订货客户</td>
-        <td>电话</td>
-        <td>目的地</td>
-        <td>状态</td>
-    </tr>
-    <tr>
-        <td>{{ orders.o_name }}</td>
-        <td>{{ orders.o_time }}</td>
-        <td>{{ orders.location }}</td>
-        <td>{{ orders.person }}</td>
-        <td>{{ orders.tel }}</td>
-        <td>{{ orders.desc }}</td>
-        <td>{{ orders.status }}</td>
-    </tr>
-</table>
-<ur class="sub">
-    <li><a class="" href="/orderslist">
-        <span class="sub-menu-text">返回</span>></a>
-    </li>
-</ur>
+<body class="layui-view-body">
+    <div class="layui-content">
+    	<!--面包屑导航-->
+    	<div class="mianb">
+    		<div class="mblf layui-col-xs6 layui-col-md6">
+    			 <i class="layui-icon">&#xe656;</i>
+    			 <p>物流追踪管理 > <span>生产商</span></p>
+    		</div>
+    		<div class="mbrt layui-col-xs6 layui-col-md6">
+    			<a href="/orderslist" class="layui-btn layui-btn-normal" id="yonghu">返回</a>
+    		</div>
+    	</div>
+    	<!--面包屑导航-->
+        <div class="layui-row">
+            <div class="layui-card">
+            	<div class="table-responsive">
+			 		  <table class="layui-table" lay-skin="line" lay-size="lg" id="table">
+						  <thead>
+						    <tr>
+                                <td>订单名</td>
+                                <td>时间</td>
+                                <td>起始仓库</td>
+                                <td>订货客户</td>
+                                <td>电话</td>
+                                <td>目的地</td>
+                                <td>状态</td>
+                                <th>操作</th>
+						    </tr>
+						  </thead>
+						  <tbody>
+						    <tr>
+                                <td>{{ orders.o_name }}</td>
+                                <td>{{ orders.o_time }}</td>
+                                <td>{{ orders.location }}</td>
+                                <td>{{ orders.person }}</td>
+                                <td>{{ orders.tel }}</td>
+                                <td>{{ orders.desc }}</td>
+                                <td>{{ orders.status }}</td>
+                                <td>
+                                <div class="layui-table-cell laytable-cell-1-0-10">
+                                    <a class="layui-btn layui-btn-normal layui-btn-xs" href="{{url_for('customer_page.receive', id=orders.id)}}">收货</a>
+                                    <a class="layui-btn layui-btn-danger layui-btn-xs delete">详情</a>
+                                </div>
+                                </td>
+						    </tr>
+						  </tbody>
+					</table>
+			 	</div>
+
+           		<!--分页-->
+           		<div id="page"></div>
+           		<!--分页-->
+            </div>
+        </div>
+    </div>
+   	</div>
+        <script src="../../static/assets/layui.js"></script>
+        <script src="../../static/index.js" data-main="home"></script>
+            <script src="../../static/home.js"></script>
+        </div>
 </body>
 </html>

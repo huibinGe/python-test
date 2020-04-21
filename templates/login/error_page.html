@@ -1,13 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>message</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>厂商</title>
+    <link rel="stylesheet" href="../../static/assets/css/layui.css">
+    <link rel="stylesheet" href="../../static/assets/css/view.css"/>
+    <link rel="stylesheet" href="../../static/assets/css/admin.css"/>
 </head>
-<body>
-    {{message}}
+<body class="layui-view-body">
+     {{message}}
     <ur class="sub">
-        <li><a class="" href="/logisticslist">
+        <li><a class="" href="{{url_for('login_page.users')}}">
         <span class="sub-menu-text">返回</span>></a>
         </li>
     </ur>

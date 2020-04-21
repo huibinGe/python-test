@@ -1,14 +1,23 @@
 from flask import Blueprint, render_template, session, redirect, request, url_for, flash
 from sqlalchemy import or_
-from ..models import Commodity, Orders
+from ..models import Commodity, Orders, User
 from ..extension import db
+from flask_paginate import Pagination, get_page_parameter
 import time
 buss_page = Blueprint('bussiness_page', __name__)
 
 @buss_page.route('/corderslist')
-def list_all_orders():
-    orders = Orders.query.filter(or_(Orders.status=="已出厂", Orders.status=="已生产")).all()
-    return render_template("bussiness/orderslist.html", orders=orders)
+def list_all_orders(limit=10):
+    id = session.get('user_id')
+    user = User.query.get(id)
+    data = Orders.query.filter(or_(Orders.status=="已出厂", Orders.status=="已生产")).all()
+    page = int(request.args.get("page", 1))
+    start = (page - 1) * limit
+    end = page * limit if len(data) > page * limit else len(data)
+    pagination = Pagination(css_framework='bootstrap4', page=page, total=len(data), outer_window=0, inner_window=1)
+    ret = Orders.query.filter(or_(Orders.status=="已出厂", Orders.status=="已生产")).slice(start, end)
+    return render_template("bussiness/orderslist.html", orders=ret, pagination=pagination, user=user)
+
 
 @buss_page.route('/corderslist/query', methods=[ 'POST'])
 def query():
@@ -38,8 +47,7 @@ def outc(id):
         order.o_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
         db.session.add(order)
         db.session.commit()
-        orders = Orders.query.filter(or_(Orders.status == "已出厂", Orders.status == "已生产")).all()
-        return render_template("bussiness/error_page.html", message="出仓成功")
+        return render_template("bussiness/error_page.html", message="出厂成功")
 
 @buss_page.route('/add', methods=['GET', 'POSt'])
 def add():
