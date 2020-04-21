@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, session, redirect, request, url_fo
 from ..models import User, create_data, Orders
 from ..extension import db
 from .blockchain import get_all_blocks
+from werkzeug.security import check_password_hash
 
 login_page = Blueprint('login_page', __name__)
 
@@ -36,7 +37,7 @@ def login():
 
         user = User.query.filter(User.username == name).first()
 
-        if user and user.password == pwd:
+        if user and check_password_hash(user.password, pwd):
             session['user_id'] = user.id
             return redirect(url_for('login_page.users'))
         else:
