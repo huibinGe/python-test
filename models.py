@@ -17,15 +17,18 @@ class User(db.Model):
     def __repr__(self):
         return '<User1 %r>' % self.username
 
-class Commodity(db.Model):
+class BlockChain(db.Model):
     #商品
-    __tablename__ = 'commodity'
+    __tablename__ = 'blockchain'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(80), unique=True, nullable=False)
-    price =  db.Column(db.Integer, unique=False, nullable=False)
-    def __init__(self, name, price):
-        self.name = name
-        self.price = price
+    order_id = db.Column(db.Integer, unique=False, nullable=True)
+    chain_index = db.Column(db.Integer, unique= False, default=0)
+    current_hash = db.Column(db.String(200), unique=False, nullable=True)
+    pre_hash = db.Column(db.String(200), unique=False, nullable=True)
+    history = db.Column(db.String(600), unique=False, nullable=True)
+    little_h = db.Column(db.String(200), unique=False, nullable=True)
+    random_num = db.Column(db.Integer, unique=False, nullable=True)
+
 
     def __repr__(self):
         return '<Commodity %r>' % self.name
@@ -42,8 +45,9 @@ class Orders(db.Model):
     desc = db.Column(db.String(200), unique=False, nullable=True)#目的地
     comp = db.Column(db.String(100), unique=False, nullable=True, default='')
     status = db.Column(db.String(5), unique=False, nullable=True)
+    qrcode = db.Column(db.Text(200), unique = False,nullable=True)
 
-    def __init__(self, o_name, o_time, location, person, tel, desc,comp, status):
+    def __init__(self, o_name, o_time, location, person, tel, desc,comp, status, qrcode=""):
         self.o_name = o_name
         self.o_time = o_time
         self.location = location
@@ -52,6 +56,7 @@ class Orders(db.Model):
         self.desc = desc
         self.comp = comp
         self.status = status
+        self.qrcode = qrcode
 
 
 def create_data():
@@ -63,9 +68,6 @@ def create_data():
     user4 = User("王六", "444@qq.com", "444444", "仓库", 0)
     user5 = User("admin", "666@qq.com", "111111", "管理员", 0)
 
-    c1 = Commodity("王老吉", 5)
-    c2 = Commodity("可口可乐", 3)
-    c3 = Commodity("旺旺雪饼", 4)
     o1 = Orders("王老吉",'2019-03-13 11:35:52.13',"杭州","李四","13843558644","西安","","已生产")
     o2 = Orders("可口可乐",'2019-04-05 06:33:35.33',"上海","李四","13843558644","贵阳","","已入仓")
     o3 = Orders("旺旺雪饼",'2019-03-05 01:53:55.63',"福州","李四","13843558644","西安","申通","已发货")
@@ -74,14 +76,12 @@ def create_data():
     o6 = Orders("旺旺雪饼",'2019-04-05 01:53:55.63',"福州","李四","13843558644","西安","顺丰","已发货")
     o7 = Orders("旺旺雪饼",'2019-04-05 01:53:55.63',"福州","张三","13843558645","","","已生产")
 
+
     db.session.add(user1)
     db.session.add(user2)
     db.session.add(user3)
     db.session.add(user4)
     db.session.add(user5)
-    db.session.add(c1)
-    db.session.add(c2)
-    db.session.add(c3)
     db.session.add(o1)
     db.session.add(o2)
     db.session.add(o3)

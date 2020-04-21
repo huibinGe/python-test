@@ -4,6 +4,7 @@ from ..extension import db
 from sqlalchemy import or_
 import time
 from flask_paginate import Pagination
+from .blockchain import add_new_block
 
 ware_page = Blueprint('warehouse_page', __name__)
 
@@ -56,6 +57,7 @@ def out(id):
         order.o_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
         db.session.add(order)
         db.session.commit()
+        add_new_block("仓库入库", order.id)
         return render_template("warehouse/error_page.html", message="入仓成功")
 
 

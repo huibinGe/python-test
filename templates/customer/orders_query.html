@@ -49,7 +49,7 @@
                                 <td>
                                 <div class="layui-table-cell laytable-cell-1-0-10">
                                     <a class="layui-btn layui-btn-normal layui-btn-xs" href="{{url_for('customer_page.receive', id=orders.id)}}">收货</a>
-                                    <a class="layui-btn layui-btn-danger layui-btn-xs delete">详情</a>
+                                    <a class="layui-btn layui-btn-danger layui-btn-xs delete" href="{{url_for('login_page.show_detail', order_id=order.id)}}">详情</a>
                                 </div>
                                 </td>
 						    </tr>

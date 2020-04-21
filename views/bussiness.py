@@ -1,9 +1,11 @@
 from flask import Blueprint, render_template, session, redirect, request, url_for, flash
 from sqlalchemy import or_
-from ..models import Commodity, Orders, User
+from ..models import  Orders, User
 from ..extension import db
 from flask_paginate import Pagination, get_page_parameter
 import time
+from .blockchain import add_new_block
+
 buss_page = Blueprint('bussiness_page', __name__)
 
 @buss_page.route('/corderslist')
@@ -47,6 +49,8 @@ def outc(id):
         order.o_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
         db.session.add(order)
         db.session.commit()
+        add_new_block("生产商出厂", order.id)
+
         return render_template("bussiness/error_page.html", message="出厂成功")
 
 @buss_page.route('/add', methods=['GET', 'POSt'])
@@ -58,13 +62,15 @@ def add():
         location = request.form.get("location")
         o_time  = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
         status = "已生产"
-        person = ""
-        tel = ""
-        desc = ""
-        comp = ""
+        person = "无"
+        tel = "无"
+        desc = "无"
+        comp = "无"
         order = Orders(o_name, o_time, location, person, tel, desc, comp, status )
         db.session.add(order)
         db.session.commit()
+        add_new_block("生产商生产", order.id)
+
         return render_template("bussiness/error_page.html", message="新增成功")
 
 

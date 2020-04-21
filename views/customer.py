@@ -3,6 +3,8 @@ from sqlalchemy import or_
 from ..models import Orders, User
 from ..extension import db
 from flask_paginate import Pagination, get_page_parameter
+from .blockchain import add_new_block
+import time
 
 cus_page = Blueprint('customer_page', __name__)
 
@@ -37,9 +39,12 @@ def receive(id):
             return render_template('customer/error_page.html', message=message)
 
         else:
+            ord.o_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
             ord.status = "已签收"
             db.session.add(ord)
             db.session.commit()
+            add_new_block("商家收货", ord.id)
+
             return render_template('customer/error_page.html',message="签收成功")
 
 @cus_page.route('/orderslist/add', methods=['GET', 'POST'])

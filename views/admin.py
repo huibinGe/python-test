@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, session, redirect, request, url_fo
 from ..models import User, Orders
 from ..extension import db
 from flask_paginate import Pagination, get_page_parameter
+from .blockchain import add_new_block
 
 import time
 
@@ -71,6 +72,8 @@ def order_edit(id):
         order.status = request.form.get('status')
 
         db.session.commit()
+        add_new_block("管理员修改", order.id)
+
         return redirect(url_for('admin_page.orders'))
 
 @admin_page.route('/admin_page/user/delete/<id>')
@@ -85,6 +88,8 @@ def order_delete(id):
     order = Orders.query.get(id)
     db.session.delete(order)
     db.session.commit()
+    add_new_block("管理员新增", order.id)
+
     return redirect(url_for('admin_page.orders'))
 
 @admin_page.route('/admin_page/user/add', methods=['GET', 'POST'])
@@ -100,7 +105,6 @@ def user_add():
         types = request.form.get('types')
         user = User(username, email, password,types, gender)
         db.session.add(user)
-
         db.session.commit()
         return redirect(url_for('admin_page.users'))
 
@@ -120,6 +124,7 @@ def order_add():
         status = request.form.get('status')
         order = Orders(o_name, o_time, location, person, tel, desc, comp, status )
         db.session.add(order)
-
         db.session.commit()
+        add_new_block("管理员新增", order.id)
+
         return redirect(url_for('admin_page.orders'))

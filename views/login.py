@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, session, redirect, request, url_for, flash
-from ..models import User, create_data
+from ..models import User, create_data, Orders
 from ..extension import db
+from .blockchain import get_all_blocks
 
 login_page = Blueprint('login_page', __name__)
 
@@ -73,3 +74,17 @@ def edit(id):
 @login_page.route('/exit', methods=['GET', 'POST'])
 def exit():
     return render_template('login/login.html')
+
+@login_page.route('/show_detail/<order_id>')
+def show_detail(order_id):
+    order = Orders.query.get(order_id)
+    block_in_chain = get_all_blocks(order_id)
+    if len(block_in_chain) != 0:
+        block = block_in_chain[-1]
+        message = block.history
+        messages = message.split('\n')
+        if messages[-1] == "":
+            messages = messages[:-1]
+    else:
+        messages = ""
+    return render_template('showdetail.html', order=order, messages=messages)

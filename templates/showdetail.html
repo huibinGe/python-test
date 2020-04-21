@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>厂商</title>
+    <link rel="stylesheet" href="../../static/assets/css/layui.css">
+    <link rel="stylesheet" href="../../static/assets/css/view.css"/>
+    <link rel="stylesheet" href="../../static/assets/css/admin.css"/>
+</head>
+<body class="layui-view-body">
+    <div class="layui-content">
+    	<!--面包屑导航-->
+    	<div class="mianb">
+    		<div class="mblf layui-col-xs6 layui-col-md6">
+    			 <i class="layui-icon">&#xe656;</i>
+    			 <p>物流追踪管理 > <span></span></p>
+    		</div>
+    		<div class="mbrt layui-col-xs6 layui-col-md6">
+    			<a href="{{url_for('login_page.users')}}" class="layui-btn layui-btn-normal" id="yonghu">返回</a>
+    		</div>
+    	</div>
+    	<!--面包屑导航-->
+        <div class="layui-row">
+            <div class="layui-card">
+            	<div class="table-responsive">
+			 		  <table class="layui-table" lay-skin="line" lay-size="lg" id="table">
+						    <tr>
+                                <td>二维码</td>
+                                    <td><img src="{{order.qrcode}}"/></td>
+						        </tr>
+                            {% for message in messages %}
+						    <tr>
+                                <td>记录</td>
+                                <td>{{message}}</td>
+						    </tr>
+                            {% endfor %}
+					</table>
+			 	</div>
+
+           		<!--分页-->
+           		<div id="page"></div>
+           		<!--分页-->
+            </div>
+        </div>
+    </div>
+   	</div>
+        <script src="../../static/assets/layui.js"></script>
+        <script src="../../static/index.js" data-main="home"></script>
+        <script src="../../static/home.js"></script>
+
+    </div>
+</body>
+</html>

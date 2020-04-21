@@ -3,6 +3,7 @@ from sqlalchemy import or_
 from ..models import Orders, User
 from ..extension import db
 from flask_paginate import Pagination, get_page_parameter
+from .blockchain import add_new_block
 
 import time
 
@@ -58,6 +59,8 @@ def outc(id):
         order.o_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
         db.session.add(order)
         db.session.commit()
+        add_new_block("物流发货", order.id)
+
         return render_template("logistics/error_page.html", message="发货成功")
 
 
