@@ -2,8 +2,9 @@ from flask import Blueprint, render_template, session, redirect, request, url_fo
 from ..models import Orders
 from ..extension import db
 from sqlalchemy import or_
-from flask_paginate import Pagination
+from flask_paginate import Pagination, get_page_parameter
 import time
+import sqlite3
 ware_page = Blueprint('warehouse_page', __name__)
 
 
@@ -14,7 +15,7 @@ def list_all_commodities(limit=10):
     page = int(request.args.get("page", 1))
     start = (page - 1) * limit
     end = page * limit if len(data) > page * limit else len(data)
-    paginate = Pagination(page=page, total=len(data))
+    paginate = Pagination(css_framework='bootstrap4',page=page, total=len(data), outer_window=0, inner_window=1)
     ret = data = Orders.query.filter(or_(Orders.status=="已出厂", Orders.status=="已入仓")).slice(start, end)
     return render_template("warehouse/warehouselist.html", orders=ret,paginate=paginate)
 
