@@ -129,7 +129,6 @@
 /*-------------面包屑导航--------------*/
 .mianb{
 	min-height: 34px;
-	overflow: hidden;
 	margin-bottom: 15px;
 }
 .mianb .mblf{
@@ -454,3 +453,4 @@ html, body , .app-container{
     background-color: rgba(0,0,0,.3);
     z-index: 1000;
 }
+

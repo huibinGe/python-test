@@ -7,36 +7,77 @@
     <link rel="stylesheet" href="../../static/assets/css/layui.css">
     <link rel="stylesheet" href="../../static/assets/css/view.css"/>
     <link rel="stylesheet" href="../../static/assets/css/admin.css"/>
+    <link rel="stylesheet" href="../../static/assets/css/navigation.css"/>
     <link rel="stylesheet" href="../../static/bootstrap.min.css">
     <script src="../../static/jquery.min.js"></script>
     <script src="../../static/popper.min.js"></script>
     <script src="../../static/bootstrap.min.js"></script>
-
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
 </head>
 <body class="layui-view-body">
-        <div class="layui-content">
-    	<!--面包屑导航-->
-    	    <div class="mianb">
+
+
+
+<div class="container-fluid fixed-top bg-dark py-3" style="height:60px">
+    <div class="row">
+        <div class="col-sm-1 col-0 collapse show sidebar">
+            <!-- spacer col -->
+        </div>
+        <div class="col px-3 col-sm-1">
+            <!-- toggler -->
+            <a data-toggle="collapse" href="#" data-target=".collapse" role="button">
+                <i class="fa fa-bars fa-lg"></i>
+            </a>
+        </div>
+    	    <div class="mianb col-sm-6">
     		    <div class="mblf layui-col-xs6 layui-col-md6">
     			     <i class="layui-icon">&#xe656;</i>
-    			    <p>物流追踪管理 > <span>管理员</span></p>
+    			    <p>物流追踪管理 > 管理员</p>
     		    </div>
-                <tr>
-                    <th>你好，{{user.username}}</th>
-                </tr>
-                <tr>
-                    <th><a href="{{ url_for('login_page.edit', id=user.id) }}" class="layui-btn layui-btn-normal layui-btn-xs">用户修改</a></th>
-                    <th><a href="{{ url_for('login_page.exit') }}" class="layui-btn layui-btn-normal layui-btn-xs">退出</a></th>
-                </tr>
-    	    </div>
-            <a class="layui-btn layui-btn-danger layui-btn-xs delete">订单管理</a>
-            <a class="layui-btn layui-btn-normal layui-btn-xs" href="{{url_for('admin_page.users')}}">用户管理</a>
+                </div>
+  <div class="dropdown col">
+    <button type="button" class="btn btn-primary dropdown-toggle pull-right " data-toggle="dropdown"><i class="fa fa-gear"></i></button>
+    <div class="dropdown-menu dropdown-menu-right" style="min-width: 100px">
+      <a class="dropdown-item" href="{{ url_for('login_page.edit', id=user.id) }}">用户修改</a>
+      <a class="dropdown-item" href="{{ url_for('login_page.exit') }}">退出</a>
+    </div>
+  </div>
+
+    </div>
+</div>
+
+
+<div class="container-fluid">
+    <div class="row vh-100 flex-nowrap">
+        <div class="col-1 collapse show sidebar bg-dark text-white px-0">
+            <ul class="nav flex-column flex-nowrap text-truncate navbar-dark bg-dark position-fixed pt-2 vh-100" id="sidebar">
+                <li class="nav-item">
+                    <a class="nav-link delete disabled" href="#">订单管理</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('admin_page.users')}}">用户管理</a>
+                </li>
+                <!--<li class="nav-item">-->
+                    <!--<a class="nav-link disabled" href="#">Disabled</a>-->
+                <!--</li>-->
+            </ul>
+        </div>
+
+
+
+        <div class="layui-content col-sm-12">
+    	<!--面包屑导航-->
+
+
+
+            <!--<a class="layui-btn layui-btn-danger layui-btn-xs delete">订单管理</a>-->
+            <!--<a class="layui-btn layui-btn-normal layui-btn-xs" href="{{url_for('admin_page.users')}}">用户管理</a>-->
+
 
 
     	<!--面包屑导航-->
-            <div class="layui-row">
-                <div class="layui-card">
+
             	    <div class="table-responsive">
 	                        <table class="layui-table" lay-skin="line" lay-size="lg" id="table">
 						      <thead>
@@ -85,8 +126,7 @@
                         </tr>
 			 	    </div>
 
-            </div>
-        </div>
+
 
         <div class="mianb">
     		<div class="mbrt layui-col-xs6 layui-col-md6">
@@ -97,6 +137,8 @@
         <script src="../../static/index.js" data-main="home"></script>
             <script src="../../static/home.js"></script>
         </div>
+    </div>
+</div>
 </body>
 </html>
 
