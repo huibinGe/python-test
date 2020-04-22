@@ -6,7 +6,6 @@ from .views.logistics import logics_page
 from .views.warehouse import  ware_page
 from .views.admin import admin_page
 from .extension import db
-
 app = Flask('python-test')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Py1438222@localhost:3306/python_sql'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
