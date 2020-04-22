@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, session, redirect, request, url_fo
 from ..models import User, create_data, Orders
 from ..extension import db
 from .blockchain import get_all_blocks
-from werkzeug.security import check_password_hash
+from werkzeug.security import check_password_hash, generate_password_hash
 
 login_page = Blueprint('login_page', __name__)
 
@@ -44,12 +44,12 @@ def login():
             flash('登陆失败')
             return render_template('login/login.html')
 
+
 @login_page.route('/addinitdata', methods=['GET', 'POST'])
 def addinitdata():
     if request.method == 'POST':
         create_data()
         return render_template('login/login.html')
-
 
 
 @login_page.route('/user_index/<id>', methods=['GET', 'POST'])
@@ -60,12 +60,17 @@ def edit(id):
         return render_template('login/edit.html',user=user)
     else:
         username = request.form.get('username')
-        password = request.form.get('password')
+        old_password = request.form.get('old_password')
+        password = request.form.get('new_password')
         gender = request.form.get('gender')
         email = request.form.get('email')
 
+        if not check_password_hash(user.password, old_password):
+            flash("原密码输入错误")
+            return render_template('login/edit.html', user=user)
+
         user.username = username
-        user.password = password
+        user.password = generate_password_hash(password)
         user.gender = gender
         user.email = email
         db.session.commit()
