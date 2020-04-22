@@ -1,4 +1,6 @@
 from .extension import  db
+from werkzeug.security import generate_password_hash
+
 class User(db.Model):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
@@ -10,7 +12,7 @@ class User(db.Model):
     def __init__(self, username, email, password, types, gender):
         self.username = username
         self.email = email
-        self.password = password
+        self.password = generate_password_hash(password)
         self.types = types
         self.gender = gender
 
