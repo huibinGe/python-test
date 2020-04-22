@@ -7,14 +7,21 @@
     <link rel="stylesheet" href="../../static/assets/css/layui.css">
     <link rel="stylesheet" href="../../static/assets/css/view.css"/>
     <link rel="stylesheet" href="../../static/assets/css/admin.css"/>
+      <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/css/bootstrap.min.css">
+  <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdn.staticfile.org/popper.js/1.12.5/umd/popper.min.js"></script>
+  <script src="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/js/bootstrap.min.js"></script>
 </head>
 <body class="layui-view-body">
-     {{message}}
-    <ur class="sub">
-        <li><a class="" href="/corderslist">
-        <span class="sub-menu-text">返回</span>></a>
-        </li>
-    </ur>
+
+  <div class="alert alert-danger alert-dismissible">
+    <a type="submit" class="close" href="/corderslist">&times;</a>
+    <strong>失败!</strong> {{message}}。
+  </div>
+
+
    	</div>
         <script src="../../static/assets/layui.js"></script>
         <script src="../../static/index.js" data-main="home"></script>

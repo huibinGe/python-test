@@ -25,16 +25,8 @@
     {% for message in get_flashed_messages() %}
         <p class="alert">{{ message }}</p>
     {% endfor %}
-  <div class="segment">
-    <button class="unit" type="button"><i class="fa fa-mail-reply"></i></button>
-    <button class="unit" type="button"><i class="fa fa-star"></i></button>
-    <button class="unit" type="button"><i class="fa fa-gear"></i></button>
-  </div>
-</form>
-<form action="{{ url_for('login_page.addinitdata') }}" method="post">
-  <button class="data-input" type="submit" name="submit">导入数据</button>
-
 
 </form>
+
 </body>
 </html>
