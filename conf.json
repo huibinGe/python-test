@@ -1,0 +1,9 @@
+{
+  "server":"172.20.10.4",
+  "private_server":"*",
+  "port":"5555",
+  "sub_topic":"new_block",
+  "pre_file":"block",
+  "signal_port":"5556",
+  "write_port":"9001"
+}

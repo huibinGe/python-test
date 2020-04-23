@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>厂商</title>
+    <title>仓库</title>
     <link rel="stylesheet" href="../../static/assets/css/layui.css">
     <link rel="stylesheet" href="../../static/assets/css/view.css"/>
     <link rel="stylesheet" href="../../static/assets/css/admin.css"/>
@@ -42,8 +42,8 @@
                                 <td>{{ orders.status }}</td>
                                 <td>
                                 <div class="layui-table-cell laytable-cell-1-0-10">
-							      	  	<a class="layui-btn layui-btn-normal layui-btn-xs" href="{{url_for('bussiness_page.outc', id=orders.id)}}">入仓</a>
-							      	  	<a class="layui-btn layui-btn-danger layui-btn-xs delete" href="{{url_for('login_page.show_detail', order_id=order.id)}}">详情</a>
+							      	  	<!--a class="layui-btn layui-btn-normal layui-btn-xs" href="{{url_for('bussiness_page.outc', id=orders.id)}}">入仓</a-->
+							      	  	<a class="layui-btn layui-btn-danger layui-btn-xs delete" href="{{url_for('login_page.show_detail', order_id=orders.id)}}">详情</a>
                                 </div>
                                 </td>
 						    </tr>

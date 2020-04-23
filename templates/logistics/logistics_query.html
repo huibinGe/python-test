@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>厂商</title>
+    <title>物流公司</title>
     <link rel="stylesheet" href="../../static/assets/css/layui.css">
     <link rel="stylesheet" href="../../static/assets/css/view.css"/>
     <link rel="stylesheet" href="../../static/assets/css/admin.css"/>
@@ -14,7 +14,7 @@
     	<div class="mianb">
     		<div class="mblf layui-col-xs6 layui-col-md6">
     			 <i class="layui-icon">&#xe656;</i>
-    			 <p>物流追踪管理 > <span>生产商</span></p>
+    			 <p>物流追踪管理 > <span>物流公司</span></p>
     		</div>
     		<div class="mbrt layui-col-xs6 layui-col-md6">
     			<a href="/logisticslist" class="layui-btn layui-btn-normal" id="yonghu">返回</a>
@@ -48,7 +48,7 @@
                                 <td>{{ order.status }}</td>
                                 <td>
                                 <div class="layui-table-cell laytable-cell-1-0-10">
-                                        <a class="layui-btn layui-btn-normal layui-btn-xs" href="{{url_for('logistics_page.outc',id=order.id)}}">发货</a>
+                                        <!--a class="layui-btn layui-btn-normal layui-btn-xs" href="{{url_for('logistics_page.outc',id=order.id)}}">发货</a-->
 							      	  	<a class="layui-btn layui-btn-danger layui-btn-xs delete" href="{{url_for('login_page.show_detail', order_id=order.id)}}" >详情</a>
                                 </div>
                                 </td>

@@ -1,12 +1,31 @@
 from hashlib import sha256
 import json
 import time
-from ..extension import  db
-from ..models import BlockChain, Orders
+from .extension import  db
+from .models import BlockChain, Orders
+import threading
+from .zmqpublisher import publisher
+
 import  base64
 import qrcode
 import io
+import  os
+_basepath = os.path.abspath(os.path.dirname(__file__))
+conf = json.load(open(os.path.abspath(os.path.dirname(__file__))+"/conf.json"))
 
+class MyThread(threading.Thread):
+    def __init__(self, func):
+        super(MyThread, self).__init__()
+        self.func = func
+
+    def run(self):
+        self.result = self.func()
+
+    def get_result(self):
+        try:
+            return self.result
+        except Exception:
+            return None
 
 
 class Block:
@@ -22,6 +41,7 @@ class Block:
         A function that return the hash of the block contents.
         """
         #block_string = self.transactions+str(self.nonce)
+        #print(self.__dict__)
         block_string = json.dumps(self.__dict__, sort_keys=True)
         return sha256(block_string.encode()).hexdigest()
 
@@ -33,10 +53,11 @@ class Block:
         block.nonce = 0
 
         computed_hash = block.compute_hash()
-        while not computed_hash.startswith('0' * 4):
+        while not computed_hash.startswith('0' * 3):
             block.nonce += 1
             computed_hash = block.compute_hash()
             #print(computed_hash)
+        #print("正在计算区块链2222222")
         #print('最终结果是:{}, 随机数:{}'.format(computed_hash,block.nonce))
 
         return computed_hash
@@ -45,6 +66,8 @@ def get_all_blocks(order_id):
     result = BlockChain.query.filter(BlockChain.order_id==order_id).order_by(BlockChain.chain_index).all()
     return result
 
+
+    # first block of the chain
 def add_new_block(message,order_id):
 
     block_data = ''
@@ -63,17 +86,28 @@ def add_new_block(message,order_id):
     smal_transaction = "{},{},{},{},{},{}".format( _index, message, new_block.location, new_block.person,
                                                                                 new_block.desc, new_block.comp)
 
-    print(transaction)
-
-
 
     #first block of the chain
     if(_index==1):
 
         block = Block(_index,transaction,'0')
         pre_hash = ''
+        pub = publisher(conf['private_server'], conf['port'], 'new_block')
+        # pub.publish_newblock(block)
+        _pub_thread = threading.Thread(target=pub.publish_newblock, kwargs={'data': block})
+        _pub_thread.start()
+
+        # get finished status
+        _status = publisher(conf['private_server'], conf['signal_port'], '')
+        _status_thread = MyThread(_status.req_rep)
+        _status_thread.run()
+
+
+        # _pub_req.start()
         #print(block.proof_of_work(block),'---------',block.nonce)
-        cur_hash = block.proof_of_work(block)
+
+
+        cur_hash = _status_thread.result['finished']['cur_hash']
         nonce = block.nonce
         history = transaction
         little_h = smal_transaction
@@ -85,7 +119,17 @@ def add_new_block(message,order_id):
         little_h = block_in_chain[-1].little_h + smal_transaction
 
         block = Block(_index,transaction,pre_hash)
-        cur_hash = block.proof_of_work(block)
+        pub = publisher(conf['private_server'], conf['port'], 'new_block')
+        # pub.publish_newblock(block)
+        _pub_thread = threading.Thread(target=pub.publish_newblock, kwargs={'data': block})
+        _pub_thread.start()
+
+        # get finished status
+        _status = publisher(conf['private_server'], conf['signal_port'], '')
+        _status_thread = MyThread(_status.req_rep)
+        _status_thread.run()
+
+        cur_hash = _status_thread.result['finished']['cur_hash']
         nonce = block.nonce
 
     block_c = BlockChain()

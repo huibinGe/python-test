@@ -4,7 +4,14 @@ from ..models import  Orders, User
 from ..extension import db
 from flask_paginate import Pagination, get_page_parameter
 import time
-from .blockchain import add_new_block
+from ..zmqpublisher import publisher
+from ..blockchain import add_new_block
+import threading
+import os
+import json
+
+_basepath = os.path.abspath(os.path.dirname(__file__))
+conf = json.load(open(os.path.abspath(os.path.dirname(__file__))+"/../conf.json"))
 
 buss_page = Blueprint('bussiness_page', __name__)
 
@@ -33,7 +40,7 @@ def outc(id):
     if request.method == 'GET':
         if order.status=="已出厂":
             message = "商品已经出厂，无法出厂"
-            return render_template('bussiness/error_page.html', message=message)
+            return render_template('error_page.html', message=message)
         else:
             return render_template('bussiness/outc.html', order=order)
     else:
@@ -50,8 +57,10 @@ def outc(id):
         db.session.add(order)
         db.session.commit()
         add_new_block("生产商出厂", order.id)
+        return redirect(url_for('login_page.users'))
 
-        return render_template("bussiness/error_page.html", message="出厂成功")
+        #return redirect(url_for('login_page.users'))
+
 
 @buss_page.route('/add', methods=['GET', 'POSt'])
 def add():
@@ -69,8 +78,9 @@ def add():
         order = Orders(o_name, o_time, location, person, tel, desc, comp, status )
         db.session.add(order)
         db.session.commit()
-        add_new_block("生产商生产", order.id)
+        add_new_block("生产商出厂", order.id)
+        return redirect(url_for('login_page.users'))
 
-        return render_template("bussiness/error_page.html", message="新增成功")
+        #return render_template("bussiness/error_page.html", message="新增成功")
 
 

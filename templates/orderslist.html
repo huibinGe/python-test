@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>厂商</title>
+    <title>{{type}}</title>
     <link rel="stylesheet" href="../../static/assets/css/layui.css">
     <link rel="stylesheet" href="../../static/assets/css/view.css"/>
     <link rel="stylesheet" href="../../static/assets/css/admin.css"/>
@@ -31,7 +31,7 @@
     	    <div class="mianb col-sm-6">
     		    <div class="mblf layui-col-xs6 layui-col-md6">
     			     <i class="layui-icon">&#xe656;</i>
-    			    <p>物流追踪管理 >生产商</p>
+    			    <p>物流追踪管理 >{{type}}</p>
     		    </div>
                 </div>
   <div class="dropdown col">
@@ -69,9 +69,10 @@
                                     <th>编号</th>
                                     <th>订单名</th>
                                     <th>时间</th>
-                                    <th>产地</th>
-                                    <th>联系人</th>
-                                    <th>电话</th>
+                                    <th>当前地</th>
+                                    {% if type != '仓库'%}<th>目的地</th>{%endif%}
+                                    {% if type != '仓库'%}<th>联系人</th>{%endif%}
+                                    {% if type != '仓库'%}<th>电话</th> {%endif%}
                                     <th>状态</th>
                                     <th>操作</th>
 						        </tr>
@@ -83,12 +84,13 @@
                                     <td>{{ order.o_name }}</td>
                                     <td>{{ order.o_time }}</td>
                                     <td>{{ order.location }} </td>
-                                    <td>{{ order.person }} </td>
-                                    <td>{{ order.tel }}</td>
+                                    {% if type != '仓库'%}<td>{{ order.desc }} </td>{%endif%}
+                                    {% if type != '仓库'%}<td>{{ order.person }} </td>{%endif%}
+                                    {% if type != '仓库'%}<td>{{ order.tel }}</td>{%endif%}
                                     <td>{{ order.status }}</td>
                                     <td>
                                     <div class="layui-table-cell laytable-cell-1-0-10">
-							      	      	<a class="layui-btn layui-btn-normal layui-btn-xs" href="{{url_for('bussiness_page.outc', id=order.id)}}">出厂</a>
+							      	      	<a class="layui-btn layui-btn-normal layui-btn-xs" href="{{url_for(hre, id=order.id)}}">{{ops}}</a>
 							      	  	    <a class="layui-btn layui-btn-danger layui-btn-xs delete" href="{{url_for('login_page.show_detail', order_id=order.id)}}">详情</a>
                                     </div>
                                     </td>
@@ -107,13 +109,12 @@
 
         <div class="mianb">
     		<div class="mbrt layui-col-xs6 layui-col-md6">
-                 <form action="{{ url_for('bussiness_page.query', id=user.id) }}" method="post">
-                <td>订单号: <input name="o_id" type="text" value=></td>
-                <td><input type="submit" name="submit" value="查询" class="layui-btn layui-btn-normal"/></td>
+                 <form action="{{ url_for('login_page.query') }}" method="post">
+                     <tr>
+                        <td>订单号: <input name="o_id" type="text" value=></td>
+                        <td><input type="submit" name="submit" value="查询" class="layui-btn layui-btn-normal"/></td>
+                     </tr>
                 </form>
-    		</div>
-    		<div class="mbrt layui-col-xs6 layui-col-md6">
-    			<a href="{{url_for('bussiness_page.add', id=user.id)}}" class="layui-btn layui-btn-normal" id="addbanner">新增订单</a>
     		</div>
     	</div>
         <script src="../../static/assets/layui.js"></script>

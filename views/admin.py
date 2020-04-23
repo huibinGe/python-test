@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, session, redirect, request, url_fo
 from ..models import User, Orders
 from ..extension import db
 from flask_paginate import Pagination, get_page_parameter
-from .blockchain import add_new_block
+from ..blockchain import add_new_block
 
 import time
 

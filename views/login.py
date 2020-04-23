@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, session, redirect, request, url_for, flash
 from ..models import User, create_data, Orders
 from ..extension import db
-from .blockchain import get_all_blocks
+from ..blockchain import get_all_blocks
 from werkzeug.security import check_password_hash
 
 login_page = Blueprint('login_page', __name__)
@@ -89,3 +89,18 @@ def show_detail(order_id):
     else:
         messages = ""
     return render_template('showdetail.html', order=order, messages=messages)
+
+@login_page.route('/query',methods=['GET', 'POST'])
+def query():
+    o_id = request.form.get('o_id')
+    order = Orders.query.filter(Orders.id==o_id).first()
+    id = session.get('user_id')
+    if id:
+        user = User.query.get(int(id))
+        if user.types == "商家":
+            return render_template('customer/orders_query.html', orders=order)
+        elif user.types == "物流公司":
+            return render_template('logistics/logistics_query.html', order=order)
+        elif user.types == "仓库":
+            return render_template('warehouse/warehouse_query.html', orders=order)
+        return render_template('orders_query.html', order=order)
