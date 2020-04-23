@@ -55,9 +55,12 @@
                                     <td>{{ order.status }}</td>
                                     <td>
                                     <div class="layui-table-cell laytable-cell-1-0-10">
-							      	      	<a class="layui-btn layui-btn-normal layui-btn-xs" href="{{ url_for('admin_page.order_edit', id=order.id) }}">修改</a>
+
                                             <a class="layui-btn layui-btn-normal layui-btn-xs" href="{{ url_for('admin_page.order_delete', id=order.id) }}">删除</a>
                                             <a class="layui-btn layui-btn-normal layui-btn-xs delete" href="{{url_for('login_page.show_detail', order_id=order.id)}}">详情</a>
+                                            {%if order.status == '已生产'%}
+							      	      	<a class="layui-btn layui-btn-danger layui-btn-xs" href="{{ url_for('admin_page.order_edit', id=order.id) }}">修改</a>
+                                            {%endif%}
                                     </div>
                                     </td>
 						    </tr>
