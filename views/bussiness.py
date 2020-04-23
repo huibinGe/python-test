@@ -61,10 +61,14 @@ def outc(id):
         order.person = person
         order.status = "已出厂"
         order.o_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-        db.session.add(order)
-        db.session.commit()
-        add_new_block("生产商出厂", order.id)
-        return redirect(url_for('login_page.users'))
+        if desc == "" or tel == "" or person == "":
+            flash('目的地或联系人或联系电话不能为空')
+            return render_template('bussiness/outc.html', order=order)
+        else:
+            db.session.add(order)
+            db.session.commit()
+            add_new_block("生产商出厂", order.id)
+            return redirect(url_for('login_page.users'))
 
         #return redirect(url_for('login_page.users'))
 
@@ -83,6 +87,10 @@ def add():
         desc = "无"
         comp = "无"
         order = Orders(o_name, o_time, location, person, tel, desc, comp, status )
+        if o_name == "" or tel == "" or location == "":
+            flash('商品名或目的地不能为空')
+            return render_template('bussiness/add.html')
+
         db.session.add(order)
         db.session.commit()
         add_new_block("生产商生产", order.id)

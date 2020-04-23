@@ -54,7 +54,7 @@ def compute_hash(data):
     A function that return the hash of the block contents.
     """
     #block_string = self.transactions+str(self.nonce)
-    block_object = json.loads(data)
+    block_object = json.loads(data.decode())
     computed_hash = sha256(str(data,'utf-8').encode()).hexdigest()
     print("正在计算区块链:")
     while not computed_hash.startswith('0' * 4):

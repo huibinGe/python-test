@@ -50,10 +50,14 @@ def outc(id):
         order.comp_id = comp_id
         order.status = "已发货"
         order.o_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-        db.session.add(order)
-        db.session.commit()
-        add_new_block("物流发货", order.id)
-        return redirect(url_for('login_page.users'))
+        if desc == "" or tel == "" or person == "" or comp == "" or comp_id =="":
+            flash("上述信息不能为空")
+            return render_template('logistics/outc.html', order=order)
+        else:
+            db.session.add(order)
+            db.session.commit()
+            add_new_block("物流发货", order.id)
+            return redirect(url_for('login_page.users'))
 
         #return render_template("logistics/error_page.html", message="发货成功")
 

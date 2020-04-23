@@ -62,6 +62,11 @@
             </div>
         </div>
     </div>
+    <font size="3" color="red" align="center">
+    {% for message in get_flashed_messages() %}
+        <p class="alert">{{ message }}</p>
+    {% endfor %}
+    </font>
    	</div>
         <script src="../../static/assets/layui.js"></script>
         <script src="../../static/index.js" data-main="home"></script>

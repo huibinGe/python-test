@@ -48,13 +48,16 @@ def user_edit(id):
         password = request.form.get('password')
         gender = request.form.get('gender')
         email = request.form.get('email')
-
-        user.username = username
-        user.password = generate_password_hash(password)
-        user.gender = gender
-        user.email = email
-        db.session.commit()
-        return redirect(url_for('admin_page.users'))
+        if username == "" or password == "":
+            flash('账号或者密码不能为空')
+            return render_template('admin/edit.html', user=user)
+        else:
+            user.username = username
+            user.password = generate_password_hash(password)
+            user.gender = gender
+            user.email = email
+            db.session.commit()
+            return redirect(url_for('admin_page.users'))
 
 @admin_page.route('/admin_page/order/edit/<id>', methods=['GET', 'POST'])
 def order_edit(id):
@@ -72,6 +75,7 @@ def order_edit(id):
         order.comp = request.form.get('comp')
         order.comp_id = request.form.get('com_id')
         order.status = request.form.get('status')
+
 
         db.session.commit()
         add_new_block("管理员修改", order.id)
@@ -106,9 +110,13 @@ def user_add():
         email = request.form.get('email')
         types = request.form.get('types')
         user = User(username, email, password,types, gender)
-        db.session.add(user)
-        db.session.commit()
-        return redirect(url_for('admin_page.users'))
+        if username == "" or password == "":
+            flash('账号或者密码不能为空')
+            return render_template('admin/add.html')
+        else:
+            db.session.add(user)
+            db.session.commit()
+            return redirect(url_for('admin_page.users'))
 
 @admin_page.route('/admin_page/order/add', methods=['GET', 'POST'])
 def order_add():
@@ -126,11 +134,15 @@ def order_add():
         status = request.form.get('status')
         comp_id = request.form.get('com_id')
         order = Orders(o_name, o_time, location, person, tel, desc, comp, status, comp_id=comp_id )
-        db.session.add(order)
-        db.session.commit()
-        add_new_block("管理员新增", order.id)
+        if o_name == "" or location == "":
+            flash('商品名或者初始地不能为空')
+            return render_template('admin/order_add.html')
+        else:
+            db.session.add(order)
+            db.session.commit()
+            add_new_block("管理员新增", order.id)
 
-        return redirect(url_for('admin_page.orders'))
+            return redirect(url_for('admin_page.orders'))
 
 @admin_page.route('/orderslist/query', methods=[ 'POST'])
 def query():

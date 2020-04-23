@@ -36,6 +36,9 @@ def login():
     else:
         name = request.form.get('name')
         pwd = request.form.get('password')
+        if name == "" or pwd == "":
+            flash('账号和密码不能为空')
+            return render_template('login/login.html')
 
         user = User.query.filter(User.username == name).first()
 
@@ -43,7 +46,7 @@ def login():
             session['user_id'] = user.id
             return redirect(url_for('login_page.users'))
         else:
-            flash('登陆失败')
+            flash('密码错误')
             return render_template('login/login.html')
 
 
