@@ -3,7 +3,7 @@ from sqlalchemy import or_
 from ..models import Orders, User
 from ..extension import db
 from flask_paginate import Pagination, get_page_parameter
-from .blockchain import add_new_block
+from ..blockchain import add_new_block
 
 import time
 
@@ -20,18 +20,9 @@ def list_all_commodities(limit=10):
     end = page * limit if len(data) > page * limit else len(data)
     pagination = Pagination(css_framework='bootstrap4', page=page, total=len(data), outer_window=0, inner_window=1)
     ret = Orders.query.filter(or_(Orders.status == "已发货", Orders.status == "已入仓")).slice(start, end)
-    return render_template("logistics/logisticslist.html", orders=ret, pagination=pagination, user=user)
+    return render_template("orderslist.html", orders=ret, pagination=pagination, user=user, type="物流公司", ops="发货", hre='logistics_page.outc')
 
-
-@logics_page.route('/logistics/delete/<int:id>')
-def delete_orders(id):
-    result = Orders.query.filter(Orders.id == id).first()
-    db.session.delete(result)
-    db.session.commit()
-    orders = Orders.query.filter(or_(Orders.status == "已发货", Orders.status == "已入仓")).all()
-    return render_template("logistics/logisticslist.html", orders=orders)
-
-
+    #return render_template("logistics/logisticslist.html", orders=ret, pagination=pagination, user=user)
 
 
 # 发货英文翻译：ship
@@ -41,7 +32,7 @@ def outc(id):
     if request.method == 'GET':
         if order.status == "已发货":
             message = "商品已经发货，无法发货"
-            return render_template('logistics/error_page.html', message=message)
+            return render_template('error_page.html', message=message)
         else:
             return render_template('logistics/outc.html', order=order)
     else:
@@ -60,27 +51,10 @@ def outc(id):
         db.session.add(order)
         db.session.commit()
         add_new_block("物流发货", order.id)
+        return redirect(url_for('login_page.users'))
 
-        return render_template("logistics/error_page.html", message="发货成功")
+        #return render_template("logistics/error_page.html", message="发货成功")
 
-
-@logics_page.route('/logistics/add', methods=['GET', 'POST'])
-def add():
-    # id = request.form.get('id')
-    o_name = request.form.get('o_name')
-    o_time = request.form.get('o_time')
-    location = request.form.get('location')
-    person = request.form.get('person')
-    tel = request.form.get('tel')
-    desc = request.form.get('desc')
-    comp = request.form.get('comp')
-    status = request.form.get('status')
-    ord = Orders(o_name, o_time, location, person, tel, desc, comp, status)
-    db.session.add(ord)
-    db.session.commit()
-    # orders = Orders.query.all()
-    orders = Orders.query.filter(or_(Orders.status == "已入仓", Orders.status == "已发货")).all()
-    return render_template('logistics/logisticslist.html', orders=orders)
 
 
 @logics_page.route('/logistics/query', methods=['GET', 'POST'])

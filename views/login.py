@@ -1,8 +1,10 @@
 from flask import Blueprint, render_template, session, redirect, request, url_for, flash
 from ..models import User, create_data, Orders
 from ..extension import db
-from .blockchain import get_all_blocks
+
+from ..blockchain import get_all_blocks
 from werkzeug.security import check_password_hash, generate_password_hash
+
 
 login_page = Blueprint('login_page', __name__)
 
@@ -60,19 +62,50 @@ def edit(id):
         return render_template('login/edit.html',user=user)
     else:
         username = request.form.get('username')
-        old_password = request.form.get('old_password')
-        password = request.form.get('new_password')
+        # old_password = request.form.get('old_password')
+        # password = request.form.get('new_password')
         gender = request.form.get('gender')
         email = request.form.get('email')
 
-        if not check_password_hash(user.password, old_password):
-            flash("原密码输入错误")
+        if not username or not gender or not email:
+            flash("Invalid Input")
             return render_template('login/edit.html', user=user)
 
         user.username = username
-        user.password = generate_password_hash(password)
+        # user.password = generate_password_hash(password)
         user.gender = gender
         user.email = email
+        db.session.commit()
+        message = "修改成功"
+        return render_template('login/error_page.html', message=message)
+
+
+@login_page.route('/user_password_index/<id>', methods=['GET', 'POST'])
+def password_edit(id):
+    user = User.query.get(id)
+
+    if request.method == 'GET':
+        return render_template('login/password_edit.html', user=user)
+    else:
+        # username = request.form.get('username')
+        old_password = request.form.get('old_password')
+        password = request.form.get('new_password')
+        re_password = request.form.get('re_new_password')
+        # gender = request.form.get('gender')
+        # email = request.form.get('email')
+
+        if not password == re_password:
+            flash("新密码输入不同")
+            return render_template('login/password_edit.html', user=user)
+
+        if not check_password_hash(user.password, old_password):
+            flash("原密码输入错误")
+            return render_template('login/password_edit.html', user=user)
+        
+        # user.username = username
+        user.password = generate_password_hash(password)
+        # user.gender = gender
+        # user.email = email
         db.session.commit()
         message = "修改成功"
         return render_template('login/error_page.html', message=message)
@@ -94,3 +127,18 @@ def show_detail(order_id):
     else:
         messages = ""
     return render_template('showdetail.html', order=order, messages=messages)
+
+@login_page.route('/query',methods=['GET', 'POST'])
+def query():
+    o_id = request.form.get('o_id')
+    order = Orders.query.filter(Orders.id==o_id).first()
+    id = session.get('user_id')
+    if id:
+        user = User.query.get(int(id))
+        if user.types == "商家":
+            return render_template('customer/orders_query.html', orders=order)
+        elif user.types == "物流公司":
+            return render_template('logistics/logistics_query.html', order=order)
+        elif user.types == "仓库":
+            return render_template('warehouse/warehouse_query.html', orders=order)
+        return render_template('orders_query.html', order=order)

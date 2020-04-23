@@ -129,4 +129,4 @@ dmypy.json
 .pyre/
 
 # virtual env 避免每次重装环境
-#./python_test
+./env
