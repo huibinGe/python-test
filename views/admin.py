@@ -69,6 +69,7 @@ def order_edit(id):
         order.tel = request.form.get('tel')
         order.desc = request.form.get('desc')
         order.comp = request.form.get('comp')
+        order.comp_id = request.form.get('com_id')
         order.status = request.form.get('status')
 
         db.session.commit()
@@ -86,9 +87,9 @@ def user_delete(id):
 @admin_page.route('/admin_page/order/delete/<id>')
 def order_delete(id):
     order = Orders.query.get(id)
+    #add_new_block("管理员删除", order.id)
     db.session.delete(order)
     db.session.commit()
-    add_new_block("管理员新增", order.id)
 
     return redirect(url_for('admin_page.orders'))
 
@@ -122,9 +123,29 @@ def order_add():
         desc = request.form.get('desc')
         comp = request.form.get('comp')
         status = request.form.get('status')
-        order = Orders(o_name, o_time, location, person, tel, desc, comp, status )
+        comp_id = request.form.get('com_id')
+        order = Orders(o_name, o_time, location, person, tel, desc, comp, status, comp_id=comp_id )
         db.session.add(order)
         db.session.commit()
         add_new_block("管理员新增", order.id)
 
         return redirect(url_for('admin_page.orders'))
+
+@admin_page.route('/orderslist/query', methods=[ 'POST'])
+def query():
+    id = request.form.get('o_id')
+    order = Orders.query.get(id)
+    if(order):
+        return render_template("admin/orders_query.html", order=order)
+    else:
+        return render_template('error_page.html', message="查询结果不存在")
+
+
+@admin_page.route('/orderslist/query_user', methods=[ 'POST'])
+def query_user():
+    id = request.form.get('u_id')
+    user = User.query.get(id)
+    if(user):
+        return render_template("admin/user_query.html", user=user)
+    else:
+        return render_template('error_page.html', message="查询结果不存在")

@@ -83,9 +83,7 @@ def add_new_block(message,order_id):
     transaction = "{}，商品名：{},时间：{},初始地：{},联系人：{},电话：{},目的地：{},物流公司：{}\n".format(message,new_block.o_name, new_block.o_time, new_block.location,
                                                 new_block.person, new_block.tel, new_block.desc, new_block.comp)
 
-    smal_transaction = "{},{},{},{},{},{}".format( _index, message, new_block.location, new_block.person,
-                                                                                new_block.desc, new_block.comp)
-
+    small_transaction = "{},{}，商品名：{},时间：{},".format(_index, message, new_block.o_name, new_block.o_time)
 
     #first block of the chain
     if(_index==1):
@@ -110,13 +108,13 @@ def add_new_block(message,order_id):
         cur_hash = _status_thread.result['finished']['cur_hash']
         nonce = block.nonce
         history = transaction
-        little_h = smal_transaction
+        little_h = small_transaction + "当前区块:{}\n".format(cur_hash)
 
     else:
         #get last chain's hash
         pre_hash = block_in_chain[-1].current_hash
         history = block_in_chain[-1].history + transaction
-        little_h = block_in_chain[-1].little_h + smal_transaction
+        little_h = block_in_chain[-1].little_h + small_transaction
 
         block = Block(_index,transaction,pre_hash)
         pub = publisher(conf['private_server'], conf['port'], 'new_block')
@@ -131,6 +129,7 @@ def add_new_block(message,order_id):
 
         cur_hash = _status_thread.result['finished']['cur_hash']
         nonce = block.nonce
+        little_h += "当前区块:{}\n".format(cur_hash)
 
     block_c = BlockChain()
     block_c.order_id = order_id

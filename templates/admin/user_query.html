@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>管理员</title>
+    <link rel="stylesheet" href="../../static/assets/css/layui.css">
+    <link rel="stylesheet" href="../../static/assets/css/view.css"/>
+    <link rel="stylesheet" href="../../static/assets/css/admin.css"/>
+</head>
+<body class="layui-view-body">
+    <div class="layui-content">
+    	<!--面包屑导航-->
+    	<div class="mianb">
+    		<div class="mblf layui-col-xs6 layui-col-md6">
+    			 <i class="layui-icon">&#xe656;</i>
+    			 <p>物流追踪管理 > <span>管理员</span></p>
+    		</div>
+    		<div class="mbrt layui-col-xs6 layui-col-md6">
+    			<a href="{{url_for('admin_page.users')}}" class="layui-btn layui-btn-normal" id="yonghu">返回</a>
+    		</div>
+    	</div>
+    	<!--面包屑导航-->
+        <div class="layui-row">
+            <div class="layui-card">
+            	<div class="table-responsive">
+			 		  <table class="layui-table" lay-skin="line" lay-size="lg" id="table">
+						  <thead>
+						    <tr>
+                                <th>编号</th>
+                                    <th>姓名</th>
+                                    <th>邮箱</th>
+                                    <th>用户</th>
+                                    <th>密码</th>
+                                    <th>性别</th>
+                                    <th>操作</th>
+                                    <td>操作</td>
+						    </tr>
+						  </thead>
+						  <tbody>
+						    <tr>
+                                <td>{{ user.id }}</td>
+                                <td>{{ user.username }}</td>
+                                <td>{{ user.email }}</td>
+                                <td>{{ user.types }}</td>
+                                <td>{{ user.password }}</td>
+                                {% if user.gender == 0 %}  <td>男</td>{%endif%}
+                                {% if user.gender == 1 %} <td>女</td>{%endif%}
+                                <td>
+                                    <div class="layui-table-cell laytable-cell-1-0-10">
+							      	      	<a class="layui-btn layui-btn-normal layui-btn-xs" href="{{ url_for('admin_page.user_edit', id=user.id) }}">修改</a>
+                                            <a class="layui-btn layui-btn-normal layui-btn-xs" href="{{ url_for('admin_page.user_delete', id=user.id) }}">删除</a>
+                                    </div>
+                                </td>
+						    </tr>
+						  </tbody>
+					</table>
+			 	</div>
+
+           		<!--分页-->
+           		<div id="page"></div>
+           		<!--分页-->
+            </div>
+        </div>
+    </div>
+   	</div>
+        <script src="../../static/assets/layui.js"></script>
+        <script src="../../static/index.js" data-main="home"></script>
+            <script src="../../static/home.js"></script>
+        </div>
+</body>
+</html>

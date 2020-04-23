@@ -32,7 +32,14 @@ def list_all_orders(limit=10):
 def query():
     id = request.form.get('o_id')
     order = Orders.query.get(id)
-    return render_template("bussiness/orders_query.html", order=order)
+    if (order):
+        if order.status == "已出厂" or order.status =="已生产":
+            return render_template("bussiness/orders_query.html", order=order)
+        else:
+            return render_template('error_page.html', message="无权限查看")
+
+    else:
+        return render_template('error_page.html', message="查询结果不存在")
 
 @buss_page.route('/outc/<id>', methods=['GET', 'POSt'])
 def outc(id):
@@ -78,7 +85,7 @@ def add():
         order = Orders(o_name, o_time, location, person, tel, desc, comp, status )
         db.session.add(order)
         db.session.commit()
-        add_new_block("生产商出厂", order.id)
+        add_new_block("生产商生产", order.id)
         return redirect(url_for('login_page.users'))
 
         #return render_template("bussiness/error_page.html", message="新增成功")

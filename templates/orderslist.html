@@ -74,6 +74,9 @@
                                     {% if type != '仓库'%}<th>目的地</th>{%endif%}
                                     {% if type != '仓库'%}<th>联系人</th>{%endif%}
                                     {% if type != '仓库'%}<th>电话</th> {%endif%}
+                                    {% if type == '物流公司' or type =="商家" %}<th>物流公司</th> {%endif%}
+                                    {% if type == '物流公司' or type =="商家" %}<th>物流单号</th> {%endif%}
+
                                     <th>状态</th>
                                     <th>操作</th>
 						        </tr>
@@ -88,6 +91,10 @@
                                     {% if type != '仓库'%}<td>{{ order.desc }} </td>{%endif%}
                                     {% if type != '仓库'%}<td>{{ order.person }} </td>{%endif%}
                                     {% if type != '仓库'%}<td>{{ order.tel }}</td>{%endif%}
+                                    {% if type == '物流公司' or type == "商家" %}<td>{{order.comp}}</td> {%endif%}
+                                    {% if type == '物流公司' or type == "商家" %}<td>{{order.comp_id}}</td> {%endif%}
+
+
                                     <td>{{ order.status }}</td>
                                     <td>
                                     <div class="layui-table-cell laytable-cell-1-0-10">
@@ -112,7 +119,7 @@
     		<div class="mbrt layui-col-xs6 layui-col-md6">
                  <form action="{{ url_for('login_page.query') }}" method="post">
                      <tr>
-                        <td>订单号: <input name="o_id" type="text" value=></td>
+                        <td>订单编号: <input name="o_id" type="text" value=></td>
                         <td><input type="submit" name="submit" value="查询" class="layui-btn layui-btn-normal"/></td>
                      </tr>
                 </form>

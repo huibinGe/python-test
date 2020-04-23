@@ -76,8 +76,7 @@ def edit(id):
         user.gender = gender
         user.email = email
         db.session.commit()
-        message = "修改成功"
-        return render_template('login/error_page.html', message=message)
+        return redirect(url_for('login_page.users'))
 
 
 @login_page.route('/user_password_index/<id>', methods=['GET', 'POST'])
@@ -107,8 +106,7 @@ def password_edit(id):
         # user.gender = gender
         # user.email = email
         db.session.commit()
-        message = "修改成功"
-        return render_template('login/error_page.html', message=message)
+        return redirect(url_for('login_page.users'))
 
 @login_page.route('/exit', methods=['GET', 'POST'])
 def exit():
@@ -136,9 +134,31 @@ def query():
     if id:
         user = User.query.get(int(id))
         if user.types == "商家":
-            return render_template('customer/orders_query.html', orders=order)
+            if order:
+                if order.status == "已发货" or order.status == "已签收":
+                    return render_template('customer/orders_query.html', orders=order)
+                else:
+                    return render_template('error_page.html', message="无权限查看")
+            else:
+                return render_template('error_page.html', message="查询结果不存在")
+
         elif user.types == "物流公司":
-            return render_template('logistics/logistics_query.html', order=order)
+            if order:
+                if order.status == "已发货" or order.status == "已入仓":
+                    return render_template('logistics/logistics_query.html', order=order)
+                else:
+                    return render_template('error_page.html', message="无权限查看")
+            else:
+                return render_template('error_page.html', message="查询结果不存在")
+
+
         elif user.types == "仓库":
-            return render_template('warehouse/warehouse_query.html', orders=order)
-        return render_template('orders_query.html', order=order)
+            if order:
+                if order.status == "已出厂" or order.status == "已入仓":
+                    return render_template('warehouse/warehouse_query.html', orders=order)
+                else:
+                    return render_template('error_page.html', message="无权限查看")
+            else:
+                return render_template('error_page.html', message="查询结果不存在")
+
+        #return render_template('orders_query.html', order=order)

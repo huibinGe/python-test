@@ -48,8 +48,20 @@
                                 <td><input type="text" name="comp"/></td>
                             </tr>
                             <tr>
+                                <td>快递单号：</td>
+                                <td><input type="text" name="comp_id" />
+                                </td>
+                            </tr>
+                            <tr>
                                 <td>状态：</td>
-                                <td><input type="text" name="status"/></td>
+                                <td><input type="text" name="status" list = "data-list"/></td>
+                                 <datalist id="data-list">
+                                        <option>已生产</option>
+                                        <option>已出厂</option>
+                                        <option>已入仓</option>
+                                        <option>已发货</option>
+                                        <option>已签收</option>
+                                      </datalist>
                             </tr>
 
                             <tr><td> </td><td><input id="submit" type="submit" name="submit" value="新增" class="layui-btn layui-btn-normal" /></td></tr>

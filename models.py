@@ -27,8 +27,8 @@ class BlockChain(db.Model):
     chain_index = db.Column(db.Integer, unique= False, default=0)
     current_hash = db.Column(db.String(200), unique=False, nullable=True)
     pre_hash = db.Column(db.String(200), unique=False, nullable=True)
-    history = db.Column(db.String(600), unique=False, nullable=True)
-    little_h = db.Column(db.String(200), unique=False, nullable=True)
+    history = db.Column(db.String(1000), unique=False, nullable=True)
+    little_h = db.Column(db.String(600), unique=False, nullable=True)
     random_num = db.Column(db.Integer, unique=False, nullable=True)
 
 
@@ -48,8 +48,9 @@ class Orders(db.Model):
     comp = db.Column(db.String(100), unique=False, nullable=True, default='')
     status = db.Column(db.String(5), unique=False, nullable=True)
     qrcode = db.Column(db.Text(200), unique = False,nullable=True)
+    comp_id = db.Column(db.String(100), unique=False, nullable=True, default='')
 
-    def __init__(self, o_name, o_time, location, person, tel, desc,comp, status, qrcode=""):
+    def __init__(self, o_name, o_time, location, person, tel, desc,comp, status, qrcode="", comp_id=""):
         self.o_name = o_name
         self.o_time = o_time
         self.location = location
@@ -59,6 +60,7 @@ class Orders(db.Model):
         self.comp = comp
         self.status = status
         self.qrcode = qrcode
+        self.comp_id = comp_id
 
 
 def create_data():
@@ -72,10 +74,10 @@ def create_data():
 
     o1 = Orders("王老吉",'2019-03-13 11:35:52.13',"杭州","李四","13843558644","西安","","已生产")
     o2 = Orders("可口可乐",'2019-04-05 06:33:35.33',"上海","李四","13843558644","贵阳","","已入仓")
-    o3 = Orders("旺旺雪饼",'2019-03-05 01:53:55.63',"福州","李四","13843558644","西安","申通","已发货")
-    o4 = Orders("旺旺雪饼",'2019-04-05 01:53:55.63',"福州","李四","13843558644","西安","顺丰","已签收")
+    o3 = Orders("旺旺雪饼",'2019-03-05 01:53:55.63',"福州","李四","13843558644","西安","申通","已发货",comp_id="123455678")
+    o4 = Orders("旺旺雪饼",'2019-04-05 01:53:55.63',"福州","李四","13843558644","西安","顺丰","已签收",comp_id="123455678")
     o5 = Orders("旺旺雪饼",'2019-04-06 01:53:55.63',"福州","霍六","1384355865","福州","","已出厂")
-    o6 = Orders("旺旺雪饼",'2019-04-05 01:53:55.63',"福州","李四","13843558644","西安","顺丰","已发货")
+    o6 = Orders("旺旺雪饼",'2019-04-05 01:53:55.63',"福州","李四","13843558644","西安","顺丰","已发货",comp_id="123455678")
     o7 = Orders("旺旺雪饼",'2019-04-05 01:53:55.63',"福州","张三","13843558645","","","已生产")
 
 

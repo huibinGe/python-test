@@ -71,7 +71,7 @@
 	                        <table class="layui-table" lay-skin="line" lay-size="lg" id="table">
 						      <thead>
 						        <tr>
-                                    <th>#</th>
+                                    <th>编号</th>
                                     <th>姓名</th>
                                     <th>邮箱</th>
                                     <th>用户</th>
@@ -84,12 +84,14 @@
 						    <tbody>
                             {% for u in users %}
                             <tr>
-                                <td>{{ loop.index + pagination.skip }}</td>
+                                <td>{{ u.id }}</td>
                                 <td>{{ u.username }}</td>
                                 <td>{{ u.email }}</td>
                                 <td>{{ u.types }}</td>
                                 <td>{{ u.password }}</td>
-                                <td>{{ u.gender }}</td>
+                                {% if u.gender == 0 %}  <td>男</td>{%endif%}
+                                {% if u.gender == 1 %} <td>女</td>{%endif%}
+
                                 <td>
                                     <div class="layui-table-cell laytable-cell-1-0-10">
 							      	      	<a class="layui-btn layui-btn-normal layui-btn-xs" href="{{ url_for('admin_page.user_edit', id=u.id) }}">修改</a>
@@ -109,7 +111,13 @@
 
 
         <div class="mianb">
-    		<div class="mbrt layui-col-xs6 layui-col-md6">
+            <div class="mbrt layui-col-xs6 layui-col-md6">
+                 <form action="{{ url_for('admin_page.query_user') }}" method="post">
+                <td>用户编号: <input name="u_id" type="text" value=></td>
+                <td><input type="submit" name="submit" value="查询" class="layui-btn layui-btn-normal"/></td>
+                </form>
+    		</div>
+    		<div class="mbrt layui-col-xs6 layui-col-md6" align="center">
     			<a href="{{url_for('admin_page.user_add')}}" class="layui-btn layui-btn-normal" id="addbanner">新增用户</a>
     		</div>
     	</div>
