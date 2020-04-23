@@ -56,12 +56,13 @@ def compute_hash(data):
     #block_string = self.transactions+str(self.nonce)
     block_object = json.loads(data)
     computed_hash = sha256(str(data,'utf-8').encode()).hexdigest()
-    print("---------正在计算区块链---------")
+    print("正在计算区块链:")
     while not computed_hash.startswith('0' * 4):
 
         block_object['nonce'] +=1
         ee = json.dumps(block_object)
         computed_hash = sha256(ee.encode()).hexdigest()
+        print("正在计算区块链:{}".format(computed_hash))
 
     print('最终结果是:{}, 随机数:{}'.format(computed_hash, block_object['nonce']))
     block_object['cur_hash'] = computed_hash
