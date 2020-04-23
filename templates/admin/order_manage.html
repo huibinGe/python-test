@@ -38,10 +38,11 @@
                 </div>
   <div class="dropdown col">
     <button type="button" class="btn btn-primary dropdown-toggle pull-right " data-toggle="dropdown"><i class="fa fa-gear"></i></button>
-    <div class="dropdown-menu dropdown-menu-right" style="min-width: 100px">
+       <div class="dropdown-menu dropdown-menu-right" style="min-width: 100px">
       <a class="dropdown-item" href="{{ url_for('login_page.edit', id=user.id) }}">用户修改</a>
+      <a class="dropdown-item" href="{{ url_for('login_page.password_edit', id=user.id) }}">密码修改</a>
       <a class="dropdown-item" href="{{ url_for('login_page.exit') }}">退出</a>
-    </div>
+       </div>
   </div>
 
     </div>

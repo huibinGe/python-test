@@ -3,6 +3,7 @@ from ..models import User, Orders
 from ..extension import db
 from flask_paginate import Pagination, get_page_parameter
 from ..blockchain import add_new_block
+from werkzeug.security import check_password_hash, generate_password_hash
 
 import time
 
@@ -49,7 +50,7 @@ def user_edit(id):
         email = request.form.get('email')
 
         user.username = username
-        user.password = password
+        user.password = generate_password_hash(password)
         user.gender = gender
         user.email = email
         db.session.commit()
