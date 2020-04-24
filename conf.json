@@ -1,5 +1,5 @@
 {
-  "server":"192.168.1.26",
+  "server":"192.168.1.8",
   "private_server":"*",
   "port":"5555",
   "sub_topic":"new_block",
